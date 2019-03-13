@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ATMV3;
 using NUnit.Framework;
 
 namespace SWT1ATM.Unit.Test

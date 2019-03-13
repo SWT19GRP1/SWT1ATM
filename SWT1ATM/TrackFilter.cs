@@ -12,9 +12,6 @@ namespace SWT1ATM
         public int Y { get; }
         public int Z { get; }
         public DateTime Time { get; }
-
-
-
         
 
 
@@ -44,6 +41,7 @@ namespace SWT1ATM
             int zOffset = 500, int xLength = 80000, int yWidth = 80000, int zHeight = 19500)
         {
             reciever.TransponderDataReady += HandlerOnRaiseTrackInsideMonitoringAreaEvent;
+
             XOffset = xOffset;
             YOffset = yOffset;
             ZOffset = zOffset;
@@ -52,7 +50,7 @@ namespace SWT1ATM
             ZHeight = zHeight;
         }
 
-        private void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
+        public void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
         {
             char[] separators = { ';' };
 
@@ -65,25 +63,29 @@ namespace SWT1ATM
                 var yCoordinate = int.Parse(tokens[2]);
                 var zCoordinate = int.Parse(tokens[3]);
                 var dateTime = GetDate(tokens[4]);
-                if ((xCoordinate >= XOffset) && (xCoordinate <= (XOffset + XLength)))
+
+                if (xCoordinate <= (XOffset + XLength))
                 {
-                    if (yCoordinate >= YOffset && yCoordinate <= YOffset + YWidth)
+                    if (yCoordinate <= YOffset + YWidth)
                     {
-                        if ((zCoordinate >= ZOffset) && (zCoordinate <= (zCoordinate + ZHeight)))
+                        if (zCoordinate <= (zCoordinate + ZHeight))
                         {
-                            Console.WriteLine("Inbound:  " + tag + "\t" + xCoordinate + "\t" + yCoordinate + "\t" + zCoordinate + "\t" + dateTime + dateTime.Millisecond);
                             TrackfilterDTO DTO = new TrackfilterDTO(tag,xCoordinate,yCoordinate,zCoordinate,dateTime);
-                            FormattedDataEvent?.Invoke(this, new FormattedTransponderDataEventArgs(DTO));
+                            OnFormattedDataEvent(DTO);
                         }
                     }
                 }
-                Console.WriteLine();
             }
         }
 
-        private DateTime GetDate(string date)
+        public virtual void OnFormattedDataEvent(TrackfilterDTO DTO)
         {
-            int year   = int.Parse(date.Substring(0,4));
+            FormattedDataEvent?.Invoke(this, new FormattedTransponderDataEventArgs(DTO));
+        }
+
+        public DateTime GetDate(string date)
+        {
+            var year   = int.Parse(date.Substring(0,4));
             var month  = int.Parse(date.Substring(4,2));
             var day    = int.Parse(date.Substring(6, 2));
             var hour   = int.Parse(date.Substring(8, 2));

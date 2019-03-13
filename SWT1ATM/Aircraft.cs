@@ -1,7 +1,7 @@
 ﻿using System;
 using SWT1ATM.Interfaces;
 
-namespace ATMV3
+namespace SWT1ATM
 {
     public class Aircraft : IVehicle
     {

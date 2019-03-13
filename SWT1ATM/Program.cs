@@ -1,5 +1,4 @@
-﻿using ATMV3;
-using TransponderReceiver;
+﻿using TransponderReceiver;
 
 namespace SWT1ATM
 {
