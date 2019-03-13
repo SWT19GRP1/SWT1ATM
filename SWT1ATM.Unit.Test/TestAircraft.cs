@@ -61,5 +61,12 @@ namespace SWT1ATM.Unit.Test
             Assert.That((_uut.Speed), Is.EqualTo(0.572).Within(0.005));
 
         }
+
+        [Test]
+        public void Aircraft_Correct_()
+        {
+
+        }
+
     }
 }

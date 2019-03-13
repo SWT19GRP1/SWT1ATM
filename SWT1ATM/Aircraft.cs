@@ -49,6 +49,10 @@ namespace SWT1ATM
                 this.Direction = (int) Math.Round(bearing);
 
                 Timestamp = referenceVehicle.Timestamp;
+
+                X = referenceVehicle.X;
+                Y = referenceVehicle.Y;
+                Z = referenceVehicle.Z;
         }
     }
 }
