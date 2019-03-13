@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SWT1ATM.Interfaces
+namespace SWT1ATM
 {
     public interface ITrackFilter
     {

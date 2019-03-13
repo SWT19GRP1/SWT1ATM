@@ -1,5 +1,5 @@
 ﻿using System;
-using SWT1ATM.Interfaces;
+using SWT1ATM;
 using TransponderReceiver;
 
 namespace SWT1ATM

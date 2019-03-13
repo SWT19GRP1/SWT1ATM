@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SWT1ATM.Interfaces;
+using SWT1ATM;
 
 namespace SWT1ATM
 {
@@ -26,7 +26,11 @@ namespace SWT1ATM
                     if (SeparationDetection(vehicles[i], vehicles[j]))
                     {
                         EventHandler<SeparationConditionEventArgs> handler = SeparationConditionEvent;
-                        IVehicle[] confVehicles = {vehicles[i], vehicles[j]};
+                        List<IVehicle> confVehicles = new List<IVehicle>();
+
+                        confVehicles.Add(vehicles[i]);
+                        confVehicles.Add(vehicles[j]);
+
                         if (handler != null)
                             handler(this, new SeparationConditionEventArgs(confVehicles));
                     }

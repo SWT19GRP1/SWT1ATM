@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using NSubstitute;
 using NUnit.Framework;
+using SWT1ATM;
 
 namespace SWT1ATM.Unit.Test
 {
@@ -9,12 +11,12 @@ namespace SWT1ATM.Unit.Test
     public class ATMRTSeparationCondition
     {
         private ATM_RT_Separation_Condition _uut;
-        private List<Aircraft> aircrafts;
+        private List<IVehicle> aircrafts;
         [SetUp]
         public void setup()
         {
             _uut = new ATM_RT_Separation_Condition(5000, 500);
-            aircrafts = new List<Aircraft>();
+            aircrafts = new List<IVehicle>();
 
             var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321", 0, 0);
             var air1 = new Aircraft(1000, 6001, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 125), "XCF892", 0, 0);
@@ -80,6 +82,47 @@ namespace SWT1ATM.Unit.Test
         #endregion
 
         #region SeparationConditionUnitTests
+
+        [Test]
+        public void SeparationCondition_ListContainsAircraftThatAreTooClose_EventRaised()
+        {
+            List<IVehicle> testList = new List<IVehicle>();
+            testList.Add(aircrafts[0]);
+            testList.Add(aircrafts[3]);
+
+            var outputter = Substitute.For<IOutput>();
+            _uut.SeparationConditionEvent += outputter.LogVehicleData;
+
+            _uut.UpdateSeparationDetection(testList);
+
+            outputter.Received().LogVehicleData(Arg.Any<object>(), Arg.Any<SeparationConditionEventArgs>());
+        }
+
+        [Test]
+        public void SeparationCondition_FullList_13EventsRaised()
+        {
+            var outputter = Substitute.For<IOutput>();
+            _uut.SeparationConditionEvent += outputter.LogVehicleData;
+
+            _uut.UpdateSeparationDetection(aircrafts);
+
+            outputter.Received(13).LogVehicleData(Arg.Any<object>(), Arg.Any<SeparationConditionEventArgs>());
+        }
+
+        [Test]
+        public void SeparationCondition_ListContainsAircraftThatAreNotTooClose_NoEventsRaised()
+        {
+            List<IVehicle> testList = new List<IVehicle>();
+            testList.Add(aircrafts[0]);
+            testList.Add(aircrafts[5]);
+
+            var outputter = Substitute.For<IOutput>();
+            _uut.SeparationConditionEvent += outputter.LogVehicleData;
+
+            _uut.UpdateSeparationDetection(testList);
+
+            outputter.DidNotReceive().LogVehicleData(Arg.Any<object>(), Arg.Any<SeparationConditionEventArgs>());
+        }
 
         #endregion
     }

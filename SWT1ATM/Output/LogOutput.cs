@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SWT1ATM.Interfaces;
+using SWT1ATM;
 
 namespace SWT1ATM.Output
 {
@@ -10,8 +10,10 @@ namespace SWT1ATM.Output
         {
             Formatter = formatter;
         }
-        public void LogVehicleData(List<IVehicle> vehicles)
+        public void LogVehicleData(object sender, SeparationConditionEventArgs args)
         {
+            var vehicles = args.vehicles;
+
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             foreach (var plane in vehicles)
             {
