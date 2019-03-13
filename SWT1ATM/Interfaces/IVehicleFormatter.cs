@@ -2,6 +2,6 @@
 {
     public interface IVehicleFormatter
     {
-        string vehicleToString(IVehicle vehicle);
+        string VehicleToString(IVehicle vehicle);
     }
 }

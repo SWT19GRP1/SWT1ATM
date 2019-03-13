@@ -5,17 +5,17 @@ using TransponderReceiver;
 namespace SWT1ATM
 {
     #region DTO
-    public class TrackfilterDTO
+    public class TrackfilterDto
     {
         public string Tag { get; }
         public int X { get; }
         public int Y { get; }
         public int Z { get; }
         public DateTime Time { get; }
-        
 
 
-        public TrackfilterDTO(string tag, int x, int y, int z, DateTime time)
+
+        public TrackfilterDto(string tag, int x, int y, int z, DateTime time)
         {
             Tag = tag;
             X = x;
@@ -25,11 +25,13 @@ namespace SWT1ATM
         }
     }
     #endregion
-    
+
 
     public class TrackFilter : ITrackFilter
     {
-       public event EventHandler<FormattedTransponderDataEventArgs> FormattedDataEvent;
+        public event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
+
+        public event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
 
         public int XOffset { get; set; }
         public int YOffset { get; set; }
@@ -50,6 +52,8 @@ namespace SWT1ATM
             ZHeight = zHeight;
         }
 
+
+
         public void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
         {
             char[] separators = { ';' };
@@ -64,35 +68,44 @@ namespace SWT1ATM
                 var zCoordinate = int.Parse(tokens[3]);
                 var dateTime = GetDate(tokens[4]);
 
+                var dto = new TrackfilterDto(tag, xCoordinate, yCoordinate, zCoordinate, dateTime);
                 if (xCoordinate <= (XOffset + XLength))
                 {
                     if (yCoordinate <= YOffset + YWidth)
                     {
                         if (zCoordinate <= (zCoordinate + ZHeight))
                         {
-                            TrackfilterDTO DTO = new TrackfilterDTO(tag,xCoordinate,yCoordinate,zCoordinate,dateTime);
-                            OnFormattedDataEvent(DTO);
+                           
+                            OnAirTrackToMonitorEvent(dto);
+                            return;
                         }
                     }
                 }
+                OnAirTrackOutSideMonitorEvent(dto);
             }
         }
 
-        public virtual void OnFormattedDataEvent(TrackfilterDTO DTO)
+        public virtual void OnAirTrackToMonitorEvent(TrackfilterDto dto)
         {
-            FormattedDataEvent?.Invoke(this, new FormattedTransponderDataEventArgs(DTO));
+            AirTrackToMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(dto));
         }
+
+        public void OnAirTrackOutSideMonitorEvent(TrackfilterDto dto)
+        {
+            AirTrackOutSideMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(dto));
+        }
+
 
         public DateTime GetDate(string date)
         {
-            var year   = int.Parse(date.Substring(0,4));
-            var month  = int.Parse(date.Substring(4,2));
-            var day    = int.Parse(date.Substring(6, 2));
-            var hour   = int.Parse(date.Substring(8, 2));
+            var year = int.Parse(date.Substring(0, 4));
+            var month = int.Parse(date.Substring(4, 2));
+            var day = int.Parse(date.Substring(6, 2));
+            var hour = int.Parse(date.Substring(8, 2));
             var minute = int.Parse(date.Substring(10, 2));
             var second = int.Parse(date.Substring(12, 2));
-            var milli  = int.Parse(date.Substring(14, 3));
-            var returnDateTime= new DateTime(year,month,day,hour,minute,second,milli);
+            var milli = int.Parse(date.Substring(14, 3));
+            var returnDateTime = new DateTime(year, month, day, hour, minute, second, milli);
 
             return returnDateTime;
         }

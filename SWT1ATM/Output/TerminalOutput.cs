@@ -20,7 +20,7 @@ namespace SWT1ATM.Output
             Console.WriteLine("Current Airplanes in Airspace:");
             foreach (var plane in vehicles)
             {
-                Console.Write(Formatter.vehicleToString(plane));
+                Console.Write(Formatter.VehicleToString(plane));
             }
             
         }

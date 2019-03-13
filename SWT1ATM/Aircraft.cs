@@ -13,37 +13,46 @@ namespace SWT1ATM
         public double Speed { get; private set; }
         public int Direction { get; private set; }
 
-        public Aircraft(int x, int y, int z, DateTime timestamp, string tag, double speed, int direction)
+        public Aircraft(int x, int y, int z, DateTime timestamp, string tag)
         {
-            this.X = x;
-            this.Y = y; 
-            this.Z = z;
-            this.Timestamp = timestamp;
-            this.Tag = tag;
-            this.Speed = speed;
-            this.Direction = direction;
+            X = x;
+            Y = y; 
+            Z = z;
+            Timestamp = timestamp;
+            Tag = tag;
+            Speed = 0;
+            Direction = 0;
+
         }
 
-        public void Update(IVehicle old)
+        public void Update(IVehicle referenceVehicle)
         {
 
 
-            if (this.Tag != old.Tag) return;
+            if (Tag != referenceVehicle.Tag) return;
 
-                this.Timestamp = old.Timestamp;
+                
         
-                var deltaX = this.X - old.X;
-                var deltaY = this.Y - old.Y;
-                var deltaZ = this.Z - old.Z;
-
+                var deltaX = X - referenceVehicle.X;
+                var deltaY = Y - referenceVehicle.Y;
+                var deltaZ = Z - referenceVehicle.Z;
+        
                 var distance = (float) Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-                var timeDiff = this.Timestamp - this.Timestamp;
+                var timeDiff = referenceVehicle.Timestamp - Timestamp;
                 var timeDiffInSec = timeDiff.TotalSeconds;
+                var roundedSec =  Math.Round(timeDiffInSec);
 
-                this.Speed = distance / timeDiffInSec;
+                this.Speed = distance / roundedSec;
+       
 
-                var bearing = Math.Atan(deltaY/deltaX) + 90.00;
-                this.Direction = (int) Math.Round(bearing);
+                var bearing = Math.Atan((double)deltaY/(double)deltaX) + 90.00;
+                Direction = (int) Math.Round(bearing);
+
+                Timestamp = referenceVehicle.Timestamp;
+
+                X = referenceVehicle.X;
+                Y = referenceVehicle.Y;
+                Z = referenceVehicle.Z;
         }
     }
 }

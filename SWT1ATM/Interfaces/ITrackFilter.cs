@@ -4,16 +4,17 @@ namespace SWT1ATM
 {
     public interface ITrackFilter
     {
-        event EventHandler<FormattedTransponderDataEventArgs> FormattedDataEvent;
+        event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
+        event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
     }
 
     public class FormattedTransponderDataEventArgs : EventArgs
     {
-        public FormattedTransponderDataEventArgs(TrackfilterDTO data)
+        public FormattedTransponderDataEventArgs(TrackfilterDto data)
         {
             TrackfilterDto = data;
         }
 
-        public TrackfilterDTO TrackfilterDto { get;}
+        public TrackfilterDto TrackfilterDto { get;}
     }
 }

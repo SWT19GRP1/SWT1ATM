@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="ATMRTSeperationConditionUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestAircraft.cs" />
     <Compile Include="TestTrackFilter.cs" />
   </ItemGroup>
   <ItemGroup>

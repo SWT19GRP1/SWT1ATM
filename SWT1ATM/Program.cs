@@ -1,4 +1,5 @@
-﻿using TransponderReceiver;
+﻿using SWT1ATM.Output;
+using TransponderReceiver;
 
 namespace SWT1ATM
 {
@@ -8,6 +9,7 @@ namespace SWT1ATM
         {
             var reciever = TransponderReceiverFactory.CreateTransponderDataReceiver();
             var trackfilter = new TrackFilter(reciever);
+            var ATM = new  Atm(trackfilter, new TerminalOutput(new AirplaneFormatter()));
             while (true)
             {
 

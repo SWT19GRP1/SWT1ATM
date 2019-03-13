@@ -11,6 +11,6 @@ namespace SWT1ATM
         string Tag { get; }
         double Speed { get; }
         int Direction { get; }
-        void Update(IVehicle old);
+        void Update(IVehicle referenceVehicle);
     }
 }

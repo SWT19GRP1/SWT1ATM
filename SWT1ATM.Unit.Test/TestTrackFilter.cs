@@ -15,7 +15,7 @@ namespace SWT1ATM.Unit.Test
         public bool WasCalled;
         private ITransponderReceiver _transponderReceiver;
         private TrackFilter _uut;
-        private TrackfilterDTO _dto;
+        private TrackfilterDto _dto;
 
         [SetUp]
         public void Setup()
@@ -23,11 +23,11 @@ namespace SWT1ATM.Unit.Test
             WasCalled = false;
             _transponderReceiver = Substitute.For<ITransponderReceiver>();
             _uut = new TrackFilter(_transponderReceiver);
-            _dto = new TrackfilterDTO("ATR423", 39045, 12932, 1400, new DateTime(2015, 11, 06, 21, 34, 56, 789));
+            _dto = new TrackfilterDto("ATR423", 39045, 12932, 1400, new DateTime(2015, 11, 06, 21, 34, 56, 789));
 
 
             _transponderReceiver.TransponderDataReady += (sender, args) => WasCalled = true;
-            _uut.FormattedDataEvent += (sender, args) =>  WasCalled = true;
+            _uut.AirTrackToMonitorEvent += (sender, args) =>  WasCalled = true;
 
         }
 
@@ -62,14 +62,14 @@ namespace SWT1ATM.Unit.Test
         //[Test]
         //public void TrackFilter_OnFormattedDataEventRaisedWithRightValues()
         //{
-        //    _uut.FormattedDataEvent += Raise.EventWith(new FormattedTransponderDataEventArgs(_dto));
+        //    _uut.AirTrackToMonitorEvent += Raise.EventWith(new FormattedTransponderDataEventArgs(_dto));
         //    Assert.That(WasCalled);
         //}
 
         [Test]
         public void TrackFilter_OnFormattedDataEvent_RaisesEvent()
         {
-            _uut.OnFormattedDataEvent(_dto);
+            _uut.OnAirTrackToMonitorEvent(_dto);
             Assert.That(WasCalled);
         }
 
