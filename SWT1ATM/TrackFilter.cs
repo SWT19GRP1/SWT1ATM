@@ -5,7 +5,7 @@ using TransponderReceiver;
 namespace SWT1ATM
 {
     #region DTO
-    public class TrackfilterDTO
+    public class TrackfilterDto
     {
         public string Tag { get; }
         public int X { get; }
@@ -15,7 +15,7 @@ namespace SWT1ATM
         
 
 
-        public TrackfilterDTO(string tag, int x, int y, int z, DateTime time)
+        public TrackfilterDto(string tag, int x, int y, int z, DateTime time)
         {
             Tag = tag;
             X = x;
@@ -70,17 +70,17 @@ namespace SWT1ATM
                     {
                         if (zCoordinate <= (zCoordinate + ZHeight))
                         {
-                            TrackfilterDTO DTO = new TrackfilterDTO(tag,xCoordinate,yCoordinate,zCoordinate,dateTime);
-                            OnFormattedDataEvent(DTO);
+                            TrackfilterDto dto = new TrackfilterDto(tag,xCoordinate,yCoordinate,zCoordinate,dateTime);
+                            OnFormattedDataEvent(dto);
                         }
                     }
                 }
             }
         }
 
-        public virtual void OnFormattedDataEvent(TrackfilterDTO DTO)
+        public virtual void OnFormattedDataEvent(TrackfilterDto dto)
         {
-            FormattedDataEvent?.Invoke(this, new FormattedTransponderDataEventArgs(DTO));
+            FormattedDataEvent?.Invoke(this, new FormattedTransponderDataEventArgs(dto));
         }
 
         public DateTime GetDate(string date)

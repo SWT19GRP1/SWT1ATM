@@ -9,11 +9,11 @@ namespace SWT1ATM.Interfaces
 
     public class FormattedTransponderDataEventArgs : EventArgs
     {
-        public FormattedTransponderDataEventArgs(TrackfilterDTO data)
+        public FormattedTransponderDataEventArgs(TrackfilterDto data)
         {
             TrackfilterDto = data;
         }
 
-        public TrackfilterDTO TrackfilterDto { get;}
+        public TrackfilterDto TrackfilterDto { get;}
     }
 }

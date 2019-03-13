@@ -4,17 +4,17 @@ using SWT1ATM.Interfaces;
 
 namespace SWT1ATM
 {
-    public class ATM_RT_Separation_Condition : IATM_Separation_Condition
+    public class AtmRtSeparationCondition : IAtmSeparationCondition
     {
-        private double planeThreshold;
-        private int heightThreshold;
+        private double _planeThreshold;
+        private int _heightThreshold;
 
         public event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
 
-        public ATM_RT_Separation_Condition(int plThres = 0, int heightThres = 0)
+        public AtmRtSeparationCondition(int plThres = 0, int heightThres = 0)
         {
-            planeThreshold = plThres;
-            heightThreshold = heightThres;
+            _planeThreshold = plThres;
+            _heightThreshold = heightThres;
         }
 
         public void UpdateSeparationDetection(List<IVehicle> vehicles)
@@ -40,9 +40,9 @@ namespace SWT1ATM
             double deltaY = vehicleA.Y - vehicleB.Y;
             int deltaZ = Math.Abs(vehicleA.Z - vehicleB.Z);
 
-            if ((Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) <= Math.Pow(planeThreshold, 2))
+            if ((Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) <= Math.Pow(_planeThreshold, 2))
             {
-                if (deltaZ <= heightThreshold)
+                if (deltaZ <= _heightThreshold)
                     return true;
             }
             return false;

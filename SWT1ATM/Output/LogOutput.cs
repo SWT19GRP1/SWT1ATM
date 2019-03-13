@@ -16,7 +16,7 @@ namespace SWT1ATM.Output
             foreach (var plane in vehicles)
             {
 
-                System.IO.File.AppendAllText(path,Formatter.vehicleToString(plane));
+                System.IO.File.AppendAllText(path,Formatter.VehicleToString(plane));
             }
         }
 

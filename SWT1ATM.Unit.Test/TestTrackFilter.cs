@@ -15,7 +15,7 @@ namespace SWT1ATM.Unit.Test
         public bool WasCalled;
         private ITransponderReceiver _transponderReceiver;
         private TrackFilter _uut;
-        private TrackfilterDTO _dto;
+        private TrackfilterDto _dto;
 
         [SetUp]
         public void Setup()
@@ -23,7 +23,7 @@ namespace SWT1ATM.Unit.Test
             WasCalled = false;
             _transponderReceiver = Substitute.For<ITransponderReceiver>();
             _uut = new TrackFilter(_transponderReceiver);
-            _dto = new TrackfilterDTO("ATR423", 39045, 12932, 1400, new DateTime(2015, 11, 06, 21, 34, 56, 789));
+            _dto = new TrackfilterDto("ATR423", 39045, 12932, 1400, new DateTime(2015, 11, 06, 21, 34, 56, 789));
 
 
             _transponderReceiver.TransponderDataReady += (sender, args) => WasCalled = true;
