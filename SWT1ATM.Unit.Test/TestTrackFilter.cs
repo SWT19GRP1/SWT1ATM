@@ -27,7 +27,7 @@ namespace SWT1ATM.Unit.Test
 
 
             _transponderReceiver.TransponderDataReady += (sender, args) => WasCalled = true;
-            _uut.FormattedDataEvent += (sender, args) =>  WasCalled = true;
+            _uut.AirTrackToMonitorEvent += (sender, args) =>  WasCalled = true;
 
         }
 
@@ -62,14 +62,14 @@ namespace SWT1ATM.Unit.Test
         //[Test]
         //public void TrackFilter_OnFormattedDataEventRaisedWithRightValues()
         //{
-        //    _uut.FormattedDataEvent += Raise.EventWith(new FormattedTransponderDataEventArgs(_dto));
+        //    _uut.AirTrackToMonitorEvent += Raise.EventWith(new FormattedTransponderDataEventArgs(_dto));
         //    Assert.That(WasCalled);
         //}
 
         [Test]
         public void TrackFilter_OnFormattedDataEvent_RaisesEvent()
         {
-            _uut.OnFormattedDataEvent(_dto);
+            _uut.OnAirTrackToMonitorEvent(_dto);
             Assert.That(WasCalled);
         }
 

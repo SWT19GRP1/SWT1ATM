@@ -2,7 +2,7 @@
 
 namespace SWT1ATM.Interfaces
 {
-    interface IOutput
+    public interface IOutput
     {
         IVehicleFormatter Formatter { get; set; }
         void LogVehicleData(List<IVehicle> v);
