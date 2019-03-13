@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 
 namespace SWT1ATM.Unit.Test
@@ -63,8 +64,34 @@ namespace SWT1ATM.Unit.Test
         }
 
         [Test]
-        public void Aircraft_Correct_()
+        public void Aircraft_Correct_X()
         {
+            _uut.Update(_isUutAircraft);
+
+            Assert.That((_uut.X), Is.EqualTo(_isUutAircraft.X));
+        }
+
+        [Test]
+        public void Aircraft_Correct_Y()
+        {
+            _uut.Update(_isUutAircraft);
+
+            Assert.That((_uut.Y), Is.EqualTo(_isUutAircraft.Y));
+        }
+
+        [Test]
+        public void Aircraft_Correct_Z()
+        {
+            _uut.Update(_isUutAircraft);
+
+            Assert.That((_uut.Z), Is.EqualTo(_isUutAircraft.Z));
+        }
+
+        [Test] public void Aircraft_Correct_Direction()
+        {
+            _uut.Update(_isUutAircraft);
+
+            Assert.That((_uut.Direction),Is.EqualTo(90.00).Within(0.0005));
 
         }
 
