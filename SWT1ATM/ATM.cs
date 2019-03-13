@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SWT1ATM.Interfaces;
+using SWT1ATM;
 
 namespace SWT1ATM
 {
@@ -22,9 +22,8 @@ namespace SWT1ATM
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
         {
             AddOrUpdateAirplainRecievedEvent(e);
-            OutputData();
+            //OutputData();
         }
-
         public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
         {
             foreach (var airCraft in AirCrafts)
@@ -50,9 +49,12 @@ namespace SWT1ATM
             AirCrafts.Add(newAircraft);
         }
 
+        /*
+         Skal ske vha. events
         public void OutputData()
         {
             DataOutputType.LogVehicleData(AirCrafts);
         }
+        */
     }
 }

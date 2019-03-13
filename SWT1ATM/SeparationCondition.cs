@@ -4,14 +4,14 @@ using SWT1ATM;
 
 namespace SWT1ATM
 {
-    public class AtmRtSeparationCondition : IAtmSeparationCondition
+    public class ATMRTSeparationCondition : IAtmSeparationCondition
     {
         private double _planeThreshold;
         private int _heightThreshold;
 
         public event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
 
-        public AtmRtSeparationCondition(int plThres = 0, int heightThres = 0)
+        public ATMRTSeparationCondition(int plThres = 0, int heightThres = 0)
         {
             _planeThreshold = plThres;
             _heightThreshold = heightThres;

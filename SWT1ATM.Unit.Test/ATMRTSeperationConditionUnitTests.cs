@@ -8,23 +8,23 @@ namespace SWT1ATM.Unit.Test
 {
     [TestFixture]
     [Author("Christian Melsen")]
-    public class ATMRTSeparationCondition
+    public class ATMRTSeperationConditionUnitTests
     {
-        private ATM_RT_Separation_Condition _uut;
+        private ATMRTSeparationCondition _uut;
         private List<IVehicle> aircrafts;
         [SetUp]
         public void setup()
         {
-            _uut = new ATM_RT_Separation_Condition(5000, 500);
+            _uut = new ATMRTSeparationCondition(5000, 500);
             aircrafts = new List<IVehicle>();
 
-            var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321", 0, 0);
-            var air1 = new Aircraft(1000, 6001, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 125), "XCF892", 0, 0);
-            var air2 = new Aircraft(1000, 6000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 127), "XCF893", 0, 0);
-            var air3 = new Aircraft(1000, 5999, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 129), "XCF894", 0, 0);
-            var air4 = new Aircraft(4535, 4535, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 131), "XCF895", 0, 0);
-            var air5 = new Aircraft(4536, 4536, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 133), "XCF896", 0, 0);
-            var air6 = new Aircraft(1000, 1000, 1501, new DateTime(2019, 06, 06, 12, 12, 12, 135), "XCF897", 0, 0);
+            var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321");
+            var air1 = new Aircraft(1000, 6001, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 125), "XCF892");
+            var air2 = new Aircraft(1000, 6000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 127), "XCF893");
+            var air3 = new Aircraft(1000, 5999, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 129), "XCF894");
+            var air4 = new Aircraft(4535, 4535, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 131), "XCF895");
+            var air5 = new Aircraft(4536, 4536, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 133), "XCF896");
+            var air6 = new Aircraft(1000, 1000, 1501, new DateTime(2019, 06, 06, 12, 12, 12, 135), "XCF897");
 
             aircrafts.Add(air0);
             aircrafts.Add(air1);
