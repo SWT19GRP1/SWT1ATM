@@ -42,11 +42,11 @@ namespace SWT1ATM
                 var timeDiffInSec = timeDiff.TotalSeconds;
                 var roundedSec =  Math.Round(timeDiffInSec);
 
-                this.Speed = distance / roundedSec;
+                Speed = distance / roundedSec;
        
 
-                var bearing = Math.Atan(deltaY/deltaX) + 90.00;
-                this.Direction = (int) Math.Round(bearing);
+                var bearing = Math.Atan(deltaY/deltaX)*180/Math.PI + 90.00;
+                Direction = (int) Math.Round(bearing);
 
                 Timestamp = referenceVehicle.Timestamp;
 
