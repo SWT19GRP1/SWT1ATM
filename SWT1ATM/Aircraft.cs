@@ -1,5 +1,5 @@
 ﻿using System;
-using SWT1ATM.Interfaces;
+using SWT1ATM;
 
 namespace SWT1ATM
 {
@@ -45,7 +45,7 @@ namespace SWT1ATM
                 Speed = distance / roundedSec;
        
 
-                var bearing = Math.Atan(deltaY/deltaX)*180/Math.PI + 90.00;
+                var bearing = Math.Atan((double)deltaY/(double)deltaX)*180/Math.PI + 90.00;
                 Direction = (int) Math.Round(bearing);
 
                 Timestamp = referenceVehicle.Timestamp;

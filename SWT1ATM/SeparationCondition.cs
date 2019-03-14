@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using SWT1ATM.Interfaces;
+using SWT1ATM;
 
 namespace SWT1ATM
 {
-    public class AtmRtSeparationCondition : IAtmSeparationCondition
+    public class ATMRTSeparationCondition : IAtmSeparationCondition
     {
         private double _planeThreshold;
         private int _heightThreshold;
 
         public event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
 
-        public AtmRtSeparationCondition(int plThres = 0, int heightThres = 0)
+        public ATMRTSeparationCondition(int plThres = 0, int heightThres = 0)
         {
             _planeThreshold = plThres;
             _heightThreshold = heightThres;
@@ -26,7 +26,11 @@ namespace SWT1ATM
                     if (SeparationDetection(vehicles[i], vehicles[j]))
                     {
                         EventHandler<SeparationConditionEventArgs> handler = SeparationConditionEvent;
-                        IVehicle[] confVehicles = {vehicles[i], vehicles[j]};
+                        List<IVehicle> confVehicles = new List<IVehicle>();
+
+                        confVehicles.Add(vehicles[i]);
+                        confVehicles.Add(vehicles[j]);
+
                         if (handler != null)
                             handler(this, new SeparationConditionEventArgs(confVehicles));
                     }

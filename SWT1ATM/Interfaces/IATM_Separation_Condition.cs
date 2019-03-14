@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SWT1ATM.Interfaces
+namespace SWT1ATM
 {
-    interface IAtmSeparationCondition
+    public interface IAtmSeparationCondition
     {
         event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
         void UpdateSeparationDetection(List<IVehicle> vehicles);
@@ -12,10 +12,10 @@ namespace SWT1ATM.Interfaces
 
     public class SeparationConditionEventArgs : EventArgs
     {
-        public IVehicle[] Vehicles { get; private set; }
-        public SeparationConditionEventArgs(IVehicle[] vehicles)
+        public List<IVehicle> vehicles { get; private set; }
+        public SeparationConditionEventArgs(List<IVehicle> Vehicles)
         {
-            this.Vehicles = vehicles;
+            vehicles = Vehicles;
         }
     }
 }

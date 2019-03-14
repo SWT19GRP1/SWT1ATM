@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace SWT1ATM.Interfaces
+namespace SWT1ATM
 {
     public interface ITrackFilter
     {
-        event EventHandler<FormattedTransponderDataEventArgs> FormattedDataEvent;
+        event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
+        event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
     }
 
     public class FormattedTransponderDataEventArgs : EventArgs
