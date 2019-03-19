@@ -30,14 +30,14 @@ namespace SWT1ATM.Factory
             return new AirplaneFormatter();
         }
 
-        public IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter)
+        public IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter, ITrackFilter track)
         {
-            return new TerminalOutput(formatter);
+            return new TerminalOutput(formatter, track);
         }
 
-        public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter)
+        public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, ITrackFilter track)
         {
-            return new LogOutput(formatter);
+            return new LogOutput(formatter, track);
         }
 
         public IAtmSeparationCondition CreateInstanceAtmSeparationCondition(int plThreshold, int heightThreshold)

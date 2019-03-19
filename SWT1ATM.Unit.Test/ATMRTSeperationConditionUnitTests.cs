@@ -95,7 +95,7 @@ namespace SWT1ATM.Unit.Test
 
             _uut.UpdateSeparationDetection(testList);
 
-            outputter.Received().LogVehicleData(Arg.Any<object>(), Arg.Any<SeparationConditionEventArgs>());
+            outputter.Received().LogVehicleData(Arg.Any<object>(), Arg.Any<FormattedTransponderDataEventArgs>());
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace SWT1ATM.Unit.Test
 
             _uut.UpdateSeparationDetection(aircrafts);
 
-            outputter.Received(13).LogVehicleData(Arg.Any<object>(), Arg.Any<SeparationConditionEventArgs>());
+            outputter.Received(13).LogVehicleData(Arg.Any<object>(), Arg.Any<FormattedTransponderDataEventArgs>());
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace SWT1ATM.Unit.Test
 
             _uut.UpdateSeparationDetection(testList);
 
-            outputter.DidNotReceive().LogVehicleData(Arg.Any<object>(), Arg.Any<SeparationConditionEventArgs>());
+            outputter.DidNotReceive().LogVehicleData(Arg.Any<object>(), Arg.Any<FormattedTransponderDataEventArgs>());
         }
 
         #endregion

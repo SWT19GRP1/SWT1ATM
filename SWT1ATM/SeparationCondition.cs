@@ -14,7 +14,7 @@ namespace SWT1ATM
             
         }
 
-        public event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
+        public event EventHandler<FormattedTransponderDataEventArgs> SeparationConditionEvent;
 
         public ATMRTSeparationCondition(int plThres = 0, int heightThres = 0)
         {
@@ -30,14 +30,14 @@ namespace SWT1ATM
                 {
                     if (SeparationDetection(vehicles[i], vehicles[j]))
                     {
-                        EventHandler<SeparationConditionEventArgs> handler = SeparationConditionEvent;
+                        EventHandler<FormattedTransponderDataEventArgs> handler = SeparationConditionEvent;
                         List<IVehicle> confVehicles = new List<IVehicle>();
 
                         confVehicles.Add(vehicles[i]);
                         confVehicles.Add(vehicles[j]);
 
                         if (handler != null)
-                            handler(this, new SeparationConditionEventArgs(confVehicles));
+                            handler(this, new FormattedTransponderDataEventArgs(confVehicles));
                     }
                 }
             }

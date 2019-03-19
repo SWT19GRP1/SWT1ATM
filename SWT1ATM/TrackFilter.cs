@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SWT1ATM;
+using SWT1ATM.Factory;
 using TransponderReceiver;
 
 namespace SWT1ATM
@@ -8,8 +9,6 @@ namespace SWT1ATM
     public class TrackFilter : ITrackFilter
     {
         public event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
-
-        public event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
 
         public int XOffset { get; set; }
         public int YOffset { get; set; }
@@ -29,8 +28,6 @@ namespace SWT1ATM
             YWidth = yWidth;
             ZHeight = zHeight;
         }
-
-
 
         public void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
         {

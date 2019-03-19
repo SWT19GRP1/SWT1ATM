@@ -21,6 +21,7 @@ namespace SWT1ATM
 
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
         {
+            
             OutputData(e.vehicles);
         }
 
@@ -57,7 +58,7 @@ namespace SWT1ATM
 
         public void OutputData(List<IVehicle> vehicles)
         {
-            DataOutputType.LogVehicleData(this, new SeparationConditionEventArgs(vehicles));
+            DataOutputType.LogVehicleData(this, new FormattedTransponderDataEventArgs(vehicles));
         }
 
     }

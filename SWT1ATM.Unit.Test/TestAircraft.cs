@@ -26,45 +26,30 @@ namespace SWT1ATM.Unit.Test
             _notUutAircraft = new Aircraft(8800, 15000, 8000, new DateTime(2019, 06, 12, 4, 16, 12, 123), "ATT746");
             _isUutAircraft = new Aircraft(5000, 5000, 6000, new DateTime(2019, 06, 06, 14, 12, 12, 123), "ATR546");
             _isUutAircraft2 = new Aircraft(8000, 3000, 6000, new DateTime(2019, 06, 06, 14, 12, 12, 123), "ATR546");
-
-
-
         }
 
         [Test]
         public void Aircraft_Timestamp_Updates()
         {
-
-            _uut.Update(_isUutAircraft);
+           _uut.Update(_isUutAircraft);
 
             Assert.That((_uut.Timestamp), Is.EqualTo(_isUutAircraft.Timestamp));
-
-
-
         }
 
         [Test]
         public void Aircraft_Timestamp_No_Update()
         {
-
             _uut.Update(_notUutAircraft);
 
             Assert.That((_uut.Timestamp), Is.Not.EqualTo(_notUutAircraft.Timestamp));
-
-
-
         }
 
         [Test]
         public void Aircraft_CorrectSpeed_is_found()
         {
-
             _uut.Update(_isUutAircraft);
 
-
-
             Assert.That((_uut.Speed), Is.EqualTo(0.572).Within(0.005));
-
         }
 
         [Test]
@@ -97,9 +82,6 @@ namespace SWT1ATM.Unit.Test
             _uut.Update(_isUutAircraft);
 
             Assert.That((_uut.Direction), Is.EqualTo(270).Within(0.0005));
-
-
-
         }
 
         [Test]

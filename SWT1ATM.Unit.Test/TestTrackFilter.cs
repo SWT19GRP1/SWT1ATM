@@ -15,7 +15,7 @@ namespace SWT1ATM.Unit.Test
         public bool WasCalled;
         private ITransponderReceiver _transponderReceiver;
         private TrackFilter _uut;
-        private TrackfilterDto _dto;
+        private IVehicle _dto;
 
         [SetUp]
         public void Setup()
@@ -23,12 +23,10 @@ namespace SWT1ATM.Unit.Test
             WasCalled = false;
             _transponderReceiver = Substitute.For<ITransponderReceiver>();
             _uut = new TrackFilter(_transponderReceiver);
-            _dto = new TrackfilterDto("ATR423", 39045, 12932, 1400, new DateTime(2015, 11, 06, 21, 34, 56, 789));
-
+            _dto = new Aircraft(39045, 12932, 1400, new DateTime(2015, 11, 06, 21, 34, 56, 789), "ATR423");
 
             _transponderReceiver.TransponderDataReady += (sender, args) => WasCalled = true;
             _uut.AirTrackToMonitorEvent += (sender, args) =>  WasCalled = true;
-
         }
 
         [Test]
@@ -69,7 +67,8 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void TrackFilter_OnFormattedDataEvent_RaisesEvent()
         {
-            _uut.OnAirTrackToMonitorEvent(_dto);
+            List<IVehicle> vehicles = new List<IVehicle>() {_dto};
+            _uut.OnAirTrackToMonitorEvent(vehicles);
             Assert.That(WasCalled);
         }
 
@@ -133,7 +132,7 @@ namespace SWT1ATM.Unit.Test
             Assert.That(_dto.X, Is.EqualTo(39045));
             Assert.That(_dto.Y, Is.EqualTo(12932));
             Assert.That(_dto.Z, Is.EqualTo(1400));
-            Assert.That(_dto.Time, Is.EqualTo(new DateTime(2015, 11, 06, 21, 34, 56, 789)));
+            Assert.That(_dto.Timestamp, Is.EqualTo(new DateTime(2015, 11, 06, 21, 34, 56, 789)));
         }
 
 

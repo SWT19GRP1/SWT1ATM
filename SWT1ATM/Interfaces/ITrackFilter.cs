@@ -7,7 +7,6 @@ namespace SWT1ATM
     public interface ITrackFilter
     {
         event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
-        event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
     }
 
     public class FormattedTransponderDataEventArgs : EventArgs

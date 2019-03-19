@@ -7,13 +7,14 @@ namespace SWT1ATM.Output
 {
     public class TerminalOutput:IOutput
     {
-        public TerminalOutput(IVehicleFormatter formatter)
+        public TerminalOutput(IVehicleFormatter formatter, ITrackFilter track)
         {
+            track.AirTrackToMonitorEvent += LogVehicleData;
             Formatter = formatter;
         }
         public IVehicleFormatter Formatter { get; set; }
 
-        public void LogVehicleData(object sender, SeparationConditionEventArgs args)
+        public void LogVehicleData(object sender, FormattedTransponderDataEventArgs args)
         {
             var vehicles = args.vehicles;
 
