@@ -1,32 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using SWT1ATM;
 using TransponderReceiver;
 
 namespace SWT1ATM
 {
-    #region DTO
-    public class TrackfilterDto
-    {
-        public string Tag { get; }
-        public int X { get; }
-        public int Y { get; }
-        public int Z { get; }
-        public DateTime Time { get; }
-
-
-
-        public TrackfilterDto(string tag, int x, int y, int z, DateTime time)
-        {
-            Tag = tag;
-            X = x;
-            Y = y;
-            Z = z;
-            Time = time;
-        }
-    }
-    #endregion
-
-
     public class TrackFilter : ITrackFilter
     {
         public event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
@@ -57,6 +35,7 @@ namespace SWT1ATM
         public void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
         {
             char[] separators = { ';' };
+            List<IVehicle> vehicles = new List<IVehicle>();
 
             foreach (var data in e.TransponderData)
             {
@@ -68,9 +47,7 @@ namespace SWT1ATM
                 var zCoordinate = int.Parse(tokens[3]);
                 var dateTime = GetDate(tokens[4]);
 
-
-
-                var dto = new TrackfilterDto(tag, xCoordinate, yCoordinate, zCoordinate, dateTime);
+                var aircraft = new Aircraft(xCoordinate, yCoordinate, zCoordinate, dateTime, tag);
 
                 if (xCoordinate <= XOffset + XLength && xCoordinate >= XOffset)
                 {
@@ -78,25 +55,24 @@ namespace SWT1ATM
                     {
                         if (zCoordinate <= zCoordinate + ZHeight && zCoordinate >= ZOffset)
                         {
-                            OnAirTrackToMonitorEvent(dto);
-                            continue;
+                            vehicles.Add(aircraft);
                         }
                     }
                 }
-                OnAirTrackOutSideMonitorEvent(dto);
             }
+            OnAirTrackToMonitorEvent(vehicles);
         }
 
-        public virtual void OnAirTrackToMonitorEvent(TrackfilterDto dto)
+        public virtual void OnAirTrackToMonitorEvent(List<IVehicle> vehicles)
         {
-            AirTrackToMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(dto));
+            AirTrackToMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(vehicles));
         }
 
-        public void OnAirTrackOutSideMonitorEvent(TrackfilterDto dto)
+        /*public void OnAirTrackOutSideMonitorEvent(TrackfilterDto dto)
         {
             AirTrackOutSideMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(dto));
         }
-
+        */
 
         public DateTime GetDate(string date)
         {

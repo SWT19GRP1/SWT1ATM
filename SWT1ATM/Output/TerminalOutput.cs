@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using SWT1ATM;
 
 namespace SWT1ATM.Output
@@ -16,6 +17,7 @@ namespace SWT1ATM.Output
         {
             var vehicles = args.vehicles;
 
+            Thread.Sleep(5);
             Console.Clear();
             Console.WriteLine("Current Airplanes in Airspace:");
             foreach (var plane in vehicles)

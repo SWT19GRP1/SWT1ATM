@@ -15,17 +15,16 @@ namespace SWT1ATM
         {
             AirCrafts = new List<IVehicle>();
             track.AirTrackToMonitorEvent += OnTrackDataRecieved;
-            track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
             DataOutputType = Output;
 
         }
 
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
         {
-            AddOrUpdateAirplainRecievedEvent(e);
-            OutputData();
+            OutputData(e.vehicles);
         }
-        public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
+
+        /*public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
         {
             foreach (var airCraft in AirCrafts)
             {
@@ -34,7 +33,7 @@ namespace SWT1ATM
                     return;
                 }
             }
-        }
+        } 
 
         public void AddOrUpdateAirplainRecievedEvent(FormattedTransponderDataEventArgs e)
         {
@@ -54,11 +53,11 @@ namespace SWT1ATM
 
             if (found == false)
                 AirCrafts.Add(newAircraft);
-        }
+        } */
 
-        public void OutputData()
+        public void OutputData(List<IVehicle> vehicles)
         {
-            DataOutputType.LogVehicleData(this, new SeparationConditionEventArgs(AirCrafts));
+            DataOutputType.LogVehicleData(this, new SeparationConditionEventArgs(vehicles));
         }
 
     }
