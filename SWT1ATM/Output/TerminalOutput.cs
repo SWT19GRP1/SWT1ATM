@@ -7,9 +7,9 @@ namespace SWT1ATM.Output
 {
     public class TerminalOutput:IOutput
     {
-        public TerminalOutput(IVehicleFormatter formatter, ITrackFilter track)
+        public TerminalOutput(IVehicleFormatter formatter, Atm atm)
         {
-            track.AirTrackToMonitorEvent += LogVehicleData;
+            atm.ATMMonitorEvent += LogVehicleData;
             Formatter = formatter;
         }
         public IVehicleFormatter Formatter { get; set; }

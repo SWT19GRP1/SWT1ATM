@@ -10,9 +10,9 @@ namespace SWT1ATM.Factory
 {
     class ATM_Factory : Abstract_Factory
     {
-        public Atm CreateAtm(ITrackFilter trackFilter, IOutput output)
+        public Atm CreateAtm(ITrackFilter trackFilter)
         {
-            return new Atm(trackFilter, output);
+            return new Atm(trackFilter);
         }
 
         public IVehicle CreateInstanceAirCraft(int x, int y, int z, DateTime time, string tag)
@@ -30,9 +30,9 @@ namespace SWT1ATM.Factory
             return new AirplaneFormatter();
         }
 
-        public IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter, ITrackFilter track)
+        public IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter, Atm atm)
         {
-            return new TerminalOutput(formatter, track);
+            return new TerminalOutput(formatter, atm);
         }
 
         public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, ITrackFilter track)

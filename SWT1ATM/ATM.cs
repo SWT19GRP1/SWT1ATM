@@ -7,22 +7,33 @@ namespace SWT1ATM
 {
     public class Atm
     {
+        public event EventHandler<FormattedTransponderDataEventArgs> ATMMonitorEvent;
+
         public List<IVehicle> AirCrafts { get; set; }
-        public IOutput DataOutputType;
 
-
-        public Atm(ITrackFilter track, IOutput Output)
+        public Atm(ITrackFilter track)
         {
             AirCrafts = new List<IVehicle>();
             track.AirTrackToMonitorEvent += OnTrackDataRecieved;
-            DataOutputType = Output;
-
         }
 
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
         {
-            
-            OutputData(e.vehicles);
+            foreach (var vehicleAfter in e.vehicles)
+            {
+                bool inList = false;
+                foreach (var vehicleBefore in AirCrafts)
+                {
+                    if (vehicleBefore.Tag == vehicleAfter.Tag)
+                        inList = true;
+
+                    vehicleBefore.Update(vehicleAfter);
+                }
+                if(!inList)
+                    AirCrafts.Add(vehicleAfter);
+            }
+
+            ATMMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(AirCrafts));
         }
 
         /*public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
@@ -54,12 +65,13 @@ namespace SWT1ATM
 
             if (found == false)
                 AirCrafts.Add(newAircraft);
-        } */
+        }
 
         public void OutputData(List<IVehicle> vehicles)
         {
             DataOutputType.LogVehicleData(this, new FormattedTransponderDataEventArgs(vehicles));
         }
+        */
 
     }
 }

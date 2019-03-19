@@ -16,9 +16,9 @@ namespace SWT1ATM
 
             var vehicleFormatter = fact.CreateInstanceAirplaneFormatter();
 
-            var termOutput = fact.CreateInstanceTerminalOutput(vehicleFormatter, trackfilter);
+            var atm = fact.CreateAtm(trackfilter);
 
-            var ATM = fact.CreateAtm(trackfilter, termOutput);
+            var termOutput = fact.CreateInstanceTerminalOutput(vehicleFormatter, atm);
 
             var atmSeperationCondition = fact.CreateInstanceAtmSeparationCondition(5000, 500);
 
