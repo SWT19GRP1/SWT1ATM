@@ -8,7 +8,7 @@ using TransponderReceiver;
 
 namespace SWT1ATM.Factory
 {
-    class ATM_Factory : Abstract_Factory
+    public class ATM_Factory : Abstract_Factory
     {
         public Atm CreateAtm(ITrackFilter trackFilter)
         {

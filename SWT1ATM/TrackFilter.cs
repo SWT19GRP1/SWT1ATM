@@ -11,6 +11,9 @@ namespace SWT1ATM
         public event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
         public event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
 
+        public List<IVehicle> vehiclesIn = new List<IVehicle>();
+        public List<IVehicle> vehiclesOut = new List<IVehicle>();
+
         public int XOffset { get; set; }
         public int YOffset { get; set; }
         public int ZOffset { get; set; }
@@ -33,8 +36,7 @@ namespace SWT1ATM
         public void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
         {
             char[] separators = { ';' };
-            List<IVehicle> vehiclesIn = new List<IVehicle>();
-            List<IVehicle> vehiclesOut = new List<IVehicle>();
+
 
             foreach (var data in e.TransponderData)
             {
@@ -53,7 +55,7 @@ namespace SWT1ATM
                 {
                     if (yCoordinate <= YOffset + YWidth && yCoordinate >= YOffset)
                     {
-                        if (zCoordinate <= zCoordinate + ZHeight && zCoordinate >= ZOffset)
+                        if (zCoordinate <= ZOffset + ZHeight && zCoordinate >= ZOffset)
                         {
                             inbounds = true;
                             vehiclesIn.Add(aircraft);
