@@ -126,7 +126,6 @@ namespace SWT1ATM.Unit.Test
             Assert.That(WasCalled, Is.EqualTo(false));
         }
 
-
         [Test]
         public void TrackfilterDTO_AfterConstruction_DataIsCorrect()
         {
@@ -136,6 +135,7 @@ namespace SWT1ATM.Unit.Test
             Assert.That(_dto.Z, Is.EqualTo(1400));
             Assert.That(_dto.Time, Is.EqualTo(new DateTime(2015, 11, 06, 21, 34, 56, 789)));
         }
+
 
 
     }

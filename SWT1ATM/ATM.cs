@@ -7,7 +7,7 @@ namespace SWT1ATM
 {
     public class Atm
     {
-        public List<IVehicle> AirCrafts { get; }
+        public List<IVehicle> AirCrafts { get; set; }
         public IOutput DataOutputType;
 
 
@@ -15,7 +15,7 @@ namespace SWT1ATM
         {
             AirCrafts = new List<IVehicle>();
             track.AirTrackToMonitorEvent += OnTrackDataRecieved;
-            //track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
+            track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
             DataOutputType = Output;
 
         }
@@ -29,8 +29,10 @@ namespace SWT1ATM
         {
             foreach (var airCraft in AirCrafts)
             {
-                if (airCraft.Tag == e.TrackfilterDto.Tag)
+                if (airCraft.Tag == e.TrackfilterDto.Tag) { 
                     AirCrafts.Remove(airCraft);
+                    return;
+                }
             }
         }
 
