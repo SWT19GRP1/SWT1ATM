@@ -10,9 +10,9 @@ namespace SWT1ATM.Factory
 {
     class ATM_Factory : Abstract_Factory
     {
-        public Atm CreateAtm(ITrackFilter trackFilter)
+        public Atm CreateAtm(ITrackFilter trackFilter, IOutput output)
         {
-            return new Atm(trackFilter);
+            return new Atm(trackFilter, output);
         }
 
         public IVehicle CreateInstanceAirCraft(int x, int y, int z, DateTime time, string tag)

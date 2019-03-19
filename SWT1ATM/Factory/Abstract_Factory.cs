@@ -10,7 +10,7 @@ namespace SWT1ATM.Factory
 {
     interface Abstract_Factory
     {
-        Atm CreateAtm(ITrackFilter trackFilter);
+        Atm CreateAtm(ITrackFilter trackFilter, IOutput output); //Remove output since this should subscribe to the ATM
         IVehicle CreateInstanceAirCraft(int x, int y, int z, DateTime time, string tag);
         ITrackFilter CreateInstanceTrackFilter(ITransponderReceiver tranRec, int x_off = 5000, int y_off = 5000, int z_off = 500, int x_len = 75000, int y_len = 75000, int z_len = 19500);
         IVehicleFormatter CreateInstanceAirplaneFormatter();

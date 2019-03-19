@@ -14,7 +14,11 @@ namespace SWT1ATM
 
             var trackfilter = fact.CreateInstanceTrackFilter(reciever);
 
-            var ATM = fact.CreateAtm(trackfilter);
+            var vehicleFormatter = fact.CreateInstanceAirplaneFormatter();
+
+            var termOutput = fact.CreateInstanceTerminalOutput(vehicleFormatter);
+
+            var ATM = fact.CreateAtm(trackfilter, termOutput);
 
             var atmSeperationCondition = fact.CreateInstanceAtmSeparationCondition(5000, 500);
 
