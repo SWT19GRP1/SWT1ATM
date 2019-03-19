@@ -5,6 +5,7 @@ namespace SWT1ATM
 {
     public interface IAtmSeparationCondition
     {
+        void subscribeToATM(Atm atm);
         event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
         void UpdateSeparationDetection(List<IVehicle> vehicles);
         bool SeparationDetection(IVehicle vehicleA, IVehicle vehicleB);

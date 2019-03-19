@@ -1,4 +1,5 @@
-﻿using SWT1ATM.Output;
+﻿using SWT1ATM.Factory;
+using SWT1ATM.Output;
 using TransponderReceiver;
 
 namespace SWT1ATM
@@ -7,13 +8,17 @@ namespace SWT1ATM
     {
         static void Main(string[] args)
         {
-            var reciever = TransponderReceiverFactory.CreateTransponderDataReceiver();
-            var trackfilter = new TrackFilter(reciever);
-            var ATM = new  Atm(trackfilter, new TerminalOutput(new AirplaneFormatter()));
-            while (true)
-            {
+            ATM_Factory fact = new ATM_Factory();
 
-            }
+            var reciever = TransponderReceiverFactory.CreateTransponderDataReceiver();
+
+            var trackfilter = fact.CreateInstanceTrackFilter(reciever);
+
+            var ATM = fact.CreateAtm(trackfilter);
+
+            var atmSeperationCondition = fact.CreateInstanceAtmSeparationCondition(5000, 500);
+
+            while (true) {}
         }
     }
 }

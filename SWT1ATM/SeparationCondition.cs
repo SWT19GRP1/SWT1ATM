@@ -9,6 +9,11 @@ namespace SWT1ATM
         private double _planeThreshold;
         private int _heightThreshold;
 
+        public void subscribeToATM(Atm atm)
+        {
+            
+        }
+
         public event EventHandler<SeparationConditionEventArgs> SeparationConditionEvent;
 
         public ATMRTSeparationCondition(int plThres = 0, int heightThres = 0)
