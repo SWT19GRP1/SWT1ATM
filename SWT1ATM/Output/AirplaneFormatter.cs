@@ -6,7 +6,7 @@ namespace SWT1ATM.Output
     {
         public string VehicleToString(IVehicle plane)
         {
-            string general = "Tag: " + plane.Tag + "Coordinates: " + plane.X + "," + plane.Y + "," + plane.Z + "Direction:" + plane.Direction;
+            string general = "Tag: " + plane.Tag + " Coordinates: " + plane.X + " , " + plane.Y + " , " + plane.Z + " Direction:" + plane.Direction + " Speed: " + plane.Speed;
             string date = " Date: " + plane.Timestamp.Day + "/" + plane.Timestamp.Month + "-" +
                           plane.Timestamp.Year + "  " + plane.Timestamp.Hour + ":" + plane.Timestamp.Minute + ":" +
                           plane.Timestamp.Second + ":" + plane.Timestamp.Millisecond;
