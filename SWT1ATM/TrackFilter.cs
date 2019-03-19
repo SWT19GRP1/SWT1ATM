@@ -68,20 +68,26 @@ namespace SWT1ATM
                 var zCoordinate = int.Parse(tokens[3]);
                 var dateTime = GetDate(tokens[4]);
 
+
+
                 var dto = new TrackfilterDto(tag, xCoordinate, yCoordinate, zCoordinate, dateTime);
-                if (xCoordinate <= (XOffset + XLength))
+
+
+                //Console.WriteLine("Found" + dto.Tag + "\t" + dto.X + "\t" + dto.Y + "\t" + dto.Z + "\t" + dto.Time);
+                Console.WriteLine();
+                if (xCoordinate <= XOffset + XLength && xCoordinate >= XOffset)
                 {
-                    if (yCoordinate <= YOffset + YWidth)
+                    if (yCoordinate <= YOffset + YWidth && yCoordinate >= YOffset)
                     {
-                        if (zCoordinate <= (zCoordinate + ZHeight))
+                        if (zCoordinate <= zCoordinate + ZHeight && zCoordinate >= ZOffset)
                         {
-                           
+
                             OnAirTrackToMonitorEvent(dto);
                             return;
                         }
                     }
                 }
-                OnAirTrackOutSideMonitorEvent(dto);
+                //OnAirTrackOutSideMonitorEvent(dto);
             }
         }
 

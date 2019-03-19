@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SWT1ATM;
 
 namespace SWT1ATM
@@ -14,15 +15,15 @@ namespace SWT1ATM
         {
             AirCrafts = new List<IVehicle>();
             track.AirTrackToMonitorEvent += OnTrackDataRecieved;
-           // track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
+            //track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
             DataOutputType = Output;
-            
+
         }
 
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
         {
             AddOrUpdateAirplainRecievedEvent(e);
-            //OutputData();
+            OutputData();
         }
         public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
         {
@@ -38,23 +39,25 @@ namespace SWT1ATM
             var newAircraft = new Aircraft(e.TrackfilterDto.X, e.TrackfilterDto.Y, e.TrackfilterDto.Z,
                 e.TrackfilterDto.Time, e.TrackfilterDto.Tag);
 
+            bool found = false;
+
             foreach (var airCraft in AirCrafts)
             {
                 if (airCraft.Tag == e.TrackfilterDto.Tag)
                 {
                     airCraft.Update(newAircraft);
-                    return;
+                    found = true;
                 }
             }
-            AirCrafts.Add(newAircraft);
+
+            if (found == false)
+                AirCrafts.Add(newAircraft);
         }
 
-        /*
-         Skal ske vha. events
         public void OutputData()
         {
-            DataOutputType.LogVehicleData(AirCrafts);
+            DataOutputType.LogVehicleData(this, new SeparationConditionEventArgs(AirCrafts));
         }
-        */
+
     }
 }
