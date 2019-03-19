@@ -9,6 +9,7 @@ namespace SWT1ATM
     public class TrackFilter : ITrackFilter
     {
         public event EventHandler<FormattedTransponderDataEventArgs> AirTrackToMonitorEvent;
+        public event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
 
         public int XOffset { get; set; }
         public int YOffset { get; set; }
@@ -16,8 +17,8 @@ namespace SWT1ATM
         public int XLength { get; set; }
         public int YWidth { get; set; }
         public int ZHeight { get; set; }
-        public TrackFilter(ITransponderReceiver reciever, int xOffset = 0, int yOffset = 0,
-            int zOffset = 500, int xLength = 80000, int yWidth = 80000, int zHeight = 19500)
+        public TrackFilter(ITransponderReceiver reciever, int xOffset = 10000, int yOffset = 10000,
+            int zOffset = 500, int xLength = 70000, int yWidth = 70000, int zHeight = 19500)
         {
             reciever.TransponderDataReady += HandlerOnRaiseTrackInsideMonitoringAreaEvent;
 
@@ -32,7 +33,8 @@ namespace SWT1ATM
         public void HandlerOnRaiseTrackInsideMonitoringAreaEvent(object sender, RawTransponderDataEventArgs e)
         {
             char[] separators = { ';' };
-            List<IVehicle> vehicles = new List<IVehicle>();
+            List<IVehicle> vehiclesIn = new List<IVehicle>();
+            List<IVehicle> vehiclesOut = new List<IVehicle>();
 
             foreach (var data in e.TransponderData)
             {
@@ -46,18 +48,23 @@ namespace SWT1ATM
 
                 var aircraft = new Aircraft(xCoordinate, yCoordinate, zCoordinate, dateTime, tag);
 
+                bool inbounds = false;
                 if (xCoordinate <= XOffset + XLength && xCoordinate >= XOffset)
                 {
                     if (yCoordinate <= YOffset + YWidth && yCoordinate >= YOffset)
                     {
                         if (zCoordinate <= zCoordinate + ZHeight && zCoordinate >= ZOffset)
                         {
-                            vehicles.Add(aircraft);
+                            inbounds = true;
+                            vehiclesIn.Add(aircraft);
                         }
                     }
                 }
+                if(!inbounds)
+                    vehiclesOut.Add(aircraft);
             }
-            OnAirTrackToMonitorEvent(vehicles);
+            OnAirTrackToMonitorEvent(vehiclesIn);
+            OnAirTrackOutSideMonitorEvent(vehiclesOut);
         }
 
         public virtual void OnAirTrackToMonitorEvent(List<IVehicle> vehicles)
@@ -65,11 +72,10 @@ namespace SWT1ATM
             AirTrackToMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(vehicles));
         }
 
-        /*public void OnAirTrackOutSideMonitorEvent(TrackfilterDto dto)
+        public void OnAirTrackOutSideMonitorEvent(List<IVehicle> vehicles)
         {
-            AirTrackOutSideMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(dto));
+            AirTrackOutSideMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(vehicles));
         }
-        */
 
         public DateTime GetDate(string date)
         {

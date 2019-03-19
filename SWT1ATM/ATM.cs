@@ -15,6 +15,7 @@ namespace SWT1ATM
         {
             AirCrafts = new List<IVehicle>();
             track.AirTrackToMonitorEvent += OnTrackDataRecieved;
+            track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
         }
 
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
@@ -22,6 +23,7 @@ namespace SWT1ATM
             foreach (var vehicleAfter in e.vehicles)
             {
                 bool inList = false;
+
                 foreach (var vehicleBefore in AirCrafts)
                 {
                     if (vehicleBefore.Tag == vehicleAfter.Tag)
@@ -29,6 +31,7 @@ namespace SWT1ATM
 
                     vehicleBefore.Update(vehicleAfter);
                 }
+
                 if(!inList)
                     AirCrafts.Add(vehicleAfter);
             }
@@ -36,17 +39,22 @@ namespace SWT1ATM
             ATMMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(AirCrafts));
         }
 
-        /*public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
+        public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
         {
-            foreach (var airCraft in AirCrafts)
+            foreach (var vehicleAfter in e.vehicles)
             {
-                if (airCraft.Tag == e.TrackfilterDto.Tag) { 
-                    AirCrafts.Remove(airCraft);
-                    return;
+                foreach (var vehicleBefore in AirCrafts)
+                {
+                    if (vehicleBefore.Tag == vehicleAfter.Tag)
+                    {
+                        AirCrafts.Remove(vehicleBefore);
+                        break;
+                    }
                 }
             }
         } 
 
+        /*
         public void AddOrUpdateAirplainRecievedEvent(FormattedTransponderDataEventArgs e)
         {
             var newAircraft = new Aircraft(e.TrackfilterDto.X, e.TrackfilterDto.Y, e.TrackfilterDto.Z,
