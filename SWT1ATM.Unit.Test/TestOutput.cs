@@ -18,6 +18,7 @@ namespace SWT1ATM.Unit.Test
         private IVehicleFormatter _format;
         private IOutput _uut;
         private string _path;
+        private ITrackFilter _track;
         private List<IVehicle> _vehicles;
         #region setup
         [SetUp]
@@ -26,7 +27,8 @@ namespace SWT1ATM.Unit.Test
             _vehicles = new List<IVehicle>();
             _path = @"c:\Temp\SeparationCondition.txt";
             _format = Substitute.For<IVehicleFormatter>();
-            _uut = new LogOutput(_format);
+            _track = Substitute.For<ITrackFilter>();
+            _uut = new LogOutput(_format,_track);
             var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321");
             var air1 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XXE321");
             _vehicles.Add(air0);
@@ -42,7 +44,7 @@ namespace SWT1ATM.Unit.Test
             if (File.Exists(_path))
                 File.Delete(_path);
             separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            separationMock.SeparationConditionEvent += Raise.EventWith(this, new SeparationConditionEventArgs(_vehicles));
+            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
             Assert.That(File.Exists(_path));
             
         }
@@ -58,7 +60,7 @@ namespace SWT1ATM.Unit.Test
             myFileWriter.Write("Test:");
             myFileWriter.Close();
             separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            separationMock.SeparationConditionEvent += Raise.EventWith(this, new SeparationConditionEventArgs(_vehicles));
+            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
 
             var myFile = new System.IO.StreamReader(_path, Encoding.UTF8);
             Assert.That(myFile.ReadToEnd() == "Test:NewTest");
