@@ -5,6 +5,6 @@ namespace SWT1ATM
     public interface IOutput
     {
         IVehicleFormatter Formatter { get; set; }
-        void LogVehicleData(object sender, SeparationConditionEventArgs args);
+        void LogVehicleData(object sender, FormattedTransponderDataEventArgs args);
     }
 }

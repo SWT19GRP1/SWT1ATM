@@ -1,60 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SWT1ATM;
 
 namespace SWT1ATM
 {
     public class Atm
     {
-        public List<IVehicle> AirCrafts { get; }
-        public IOutput DataOutputType;
+        public event EventHandler<FormattedTransponderDataEventArgs> ATMMonitorEvent;
 
+        public List<IVehicle> AirCrafts { get; set; }
 
-        public Atm(ITrackFilter track, IOutput Output)
+        public Atm(ITrackFilter track)
         {
             AirCrafts = new List<IVehicle>();
             track.AirTrackToMonitorEvent += OnTrackDataRecieved;
-           // track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
-            DataOutputType = Output;
-            
+            track.AirTrackOutSideMonitorEvent += OnRemoveAirPlainRecievedEvent;
         }
 
         public void OnTrackDataRecieved(object sender, FormattedTransponderDataEventArgs e)
         {
-            AddOrUpdateAirplainRecievedEvent(e);
-            //OutputData();
+            foreach (var vehicleAfter in e.vehicles)
+            {
+                bool inList = false;
+
+                foreach (var vehicleBefore in AirCrafts)
+                {
+                    if (vehicleBefore.Tag == vehicleAfter.Tag)
+                        inList = true;
+
+                    vehicleBefore.Update(vehicleAfter);
+                }
+
+                if(!inList)
+                    AirCrafts.Add(vehicleAfter);
+            }
+
+            ATMMonitorEvent?.Invoke(this, new FormattedTransponderDataEventArgs(AirCrafts));
         }
+
         public void OnRemoveAirPlainRecievedEvent(object sender, FormattedTransponderDataEventArgs e)
         {
-            foreach (var airCraft in AirCrafts)
+            foreach (var vehicleAfter in e.vehicles)
             {
-                if (airCraft.Tag == e.TrackfilterDto.Tag)
-                    AirCrafts.Remove(airCraft);
-            }
-        }
-
-        public void AddOrUpdateAirplainRecievedEvent(FormattedTransponderDataEventArgs e)
-        {
-            var newAircraft = new Aircraft(e.TrackfilterDto.X, e.TrackfilterDto.Y, e.TrackfilterDto.Z,
-                e.TrackfilterDto.Time, e.TrackfilterDto.Tag);
-
-            foreach (var airCraft in AirCrafts)
-            {
-                if (airCraft.Tag == e.TrackfilterDto.Tag)
+                foreach (var vehicleBefore in AirCrafts)
                 {
-                    airCraft.Update(newAircraft);
-                    return;
+                    if (vehicleBefore.Tag == vehicleAfter.Tag)
+                    {
+                        AirCrafts.Remove(vehicleBefore);
+                        break;
+                    }
                 }
             }
-            AirCrafts.Add(newAircraft);
-        }
-
-        /*
-         Skal ske vha. events
-        public void OutputData()
-        {
-            DataOutputType.LogVehicleData(AirCrafts);
-        }
-        */
+        } 
     }
 }

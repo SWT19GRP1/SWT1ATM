@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace SWT1ATM
 {
@@ -10,11 +12,11 @@ namespace SWT1ATM
 
     public class FormattedTransponderDataEventArgs : EventArgs
     {
-        public FormattedTransponderDataEventArgs(TrackfilterDto data)
+        public FormattedTransponderDataEventArgs(List<IVehicle> data)
         {
-            TrackfilterDto = data;
+            vehicles = data;
         }
 
-        public TrackfilterDto TrackfilterDto { get;}
+        public List<IVehicle> vehicles { get; private set; }
     }
 }
