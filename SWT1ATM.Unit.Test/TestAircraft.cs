@@ -34,37 +34,25 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void Aircraft_Timestamp_Updates()
         {
-
-            _uut.Update(_isUutAircraft);
+           _uut.Update(_isUutAircraft);
 
             Assert.That((_uut.Timestamp), Is.EqualTo(_isUutAircraft.Timestamp));
-
-
-
         }
 
         [Test]
         public void Aircraft_Timestamp_No_Update()
         {
-
             _uut.Update(_notUutAircraft);
 
             Assert.That((_uut.Timestamp), Is.Not.EqualTo(_notUutAircraft.Timestamp));
-
-
-
         }
 
         [Test]
         public void Aircraft_CorrectSpeed_is_found()
         {
-
             _uut.Update(_isUutAircraft);
 
-
-
             Assert.That((_uut.Speed), Is.EqualTo(0.572).Within(0.005));
-
         }
         [Test]
         public void Aircraft_CorrectSpeed_is_found2()
@@ -108,9 +96,6 @@ namespace SWT1ATM.Unit.Test
             _uut.Update(_isUutAircraft);
 
             Assert.That((_uut.Direction), Is.EqualTo(270).Within(0.0005));
-
-
-
         }
 
         [Test]

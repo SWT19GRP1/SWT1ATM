@@ -5,13 +5,13 @@ namespace SWT1ATM
 {
     public class Aircraft : IVehicle
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public int Z { get; private set; }
-        public DateTime Timestamp { get; private set; }
-        public string Tag { get; private set; }
-        public double Speed { get; private set; }
-        public int Direction { get; private set; }
+        public int X { get; set; }
+        public int Y { get;  set; }
+        public int Z { get;  set; }
+        public DateTime Timestamp { get;  set; }
+        public string Tag { get;  set; }
+        public double Speed { get;  set; }
+        public int Direction { get;  set; }
 
         public Aircraft(int x, int y, int z, DateTime timestamp, string tag)
         {

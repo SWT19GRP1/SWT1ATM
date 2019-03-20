@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using SWT1ATM;
 
 namespace SWT1ATM.Output
 {
     public class LogOutput:IOutput
     {
-        public LogOutput(IVehicleFormatter formatter)
+        public LogOutput(IVehicleFormatter formatter, ITrackFilter track)
         {
+            
             Formatter = formatter;
+            track.AirTrackToMonitorEvent += LogVehicleData;
         }
-        public void LogVehicleData(object sender, SeparationConditionEventArgs args)
+        public void LogVehicleData(object sender, FormattedTransponderDataEventArgs args)
         {
             var vehicles = args.vehicles;
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string path = @"C:\Temp\SeparationCondition.txt";
+            var myFile = new System.IO.StreamWriter(path, append:true);
             foreach (var plane in vehicles)
             {
-
-                System.IO.File.AppendAllText(path,Formatter.VehicleToString(plane));
+                myFile.Write(Formatter.VehicleToString(plane));
             }
+            myFile.Close();
         }
 
         public IVehicleFormatter Formatter { get; set; }
