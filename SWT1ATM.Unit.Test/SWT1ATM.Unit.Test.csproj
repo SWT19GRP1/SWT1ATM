@@ -64,6 +64,7 @@
     <Compile Include="ATMRTSeperationConditionUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAircraft.cs" />
+    <Compile Include="TestFactory.cs" />
     <Compile Include="TestOutput.cs" />
     <Compile Include="TestTrackFilter.cs" />
   </ItemGroup>

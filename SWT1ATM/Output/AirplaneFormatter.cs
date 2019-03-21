@@ -2,7 +2,7 @@
 
 namespace SWT1ATM.Output
 {
-    class AirplaneFormatter: IVehicleFormatter
+  public class AirplaneFormatter: IVehicleFormatter
     {
         public string VehicleToString(IVehicle plane)
         {
