@@ -91,6 +91,16 @@ namespace SWT1ATM.Unit.Test
             Assert.That(() => separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
         }
 
+        [Test]
+        public void TerminalTwiceRaisedEventLogVehicleDataIsCalledTwice()
+        {
+            _uut = new TerminalOutput(_format, _atm);
+            var separationMock = Substitute.For<IAtmSeparationCondition>();
+            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
+            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
+            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
+            _format.Received(2);
+        }
         #endregion
     }
 }
