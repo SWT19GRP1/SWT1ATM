@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using SWT1ATM;
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 using SWT1ATM.Output;
 
@@ -20,6 +21,7 @@ namespace SWT1ATM.Unit.Test
         private string _path;
         private ITrackFilter _track;
         private List<IVehicle> _vehicles;
+        private IATM _atm;
         #region setup
         [SetUp]
         public void Setup()
@@ -29,6 +31,7 @@ namespace SWT1ATM.Unit.Test
             _format = Substitute.For<IVehicleFormatter>();
             _track = Substitute.For<ITrackFilter>();
             _uut = new LogOutput(_format,_track);
+            _atm = Substitute.For<IATM>();
             var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321");
             var air1 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XXE321");
             _vehicles.Add(air0);
@@ -66,7 +69,28 @@ namespace SWT1ATM.Unit.Test
             Assert.That(myFile.ReadToEnd() == "Test:NewTest");
             myFile.Close();
         }
+        [Test]
+        public void LoggerDoesntThrowErrorWithZeroLenghtList()
+        {
+            var separationMock = Substitute.For<IAtmSeparationCondition>();
+            List<IVehicle> emptyList = new List<IVehicle>();
+            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
+            Assert.That(() => separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
+        }
+
         #endregion
 
+        #region TerminalOutput
+        [Test]
+        public void TerminalDoesntThrowErrorWithZeroLengthList()
+        {
+            _uut = new TerminalOutput(_format,_atm);
+            List<IVehicle> emptyList = new List<IVehicle>();
+            var separationMock = Substitute.For<IAtmSeparationCondition>();
+            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
+            Assert.That(() => separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
+        }
+
+        #endregion
     }
 }
