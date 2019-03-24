@@ -49,7 +49,7 @@ namespace SWT1ATM.Unit.Test
         public void CreateInstanceTrackFilter_TrackFilterIsCreated()
         {
 
-            var test = _uut.CreateInstanceTrackFilter(Substitute.For<ITransponderReceiver>(), 1, 1, 1, 1, 1, 1);
+            var test = _uut.CreateInstanceTrackFilter(Substitute.For<ITransponderReceiver>(), Substitute.For<Abstract_Factory>(),1, 1, 1, 1, 1, 1);
 
             Assert.That(test,Is.TypeOf<TrackFilter>());
 

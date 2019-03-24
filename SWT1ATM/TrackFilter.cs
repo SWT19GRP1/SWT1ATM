@@ -13,18 +13,19 @@ namespace SWT1ATM
 
         public List<IVehicle> vehiclesIn = new List<IVehicle>();
         public List<IVehicle> vehiclesOut = new List<IVehicle>();
-
+        public Abstract_Factory AirplaneFactory;
         public int XOffset { get; set; }
         public int YOffset { get; set; }
         public int ZOffset { get; set; }
         public int XLength { get; set; }
         public int YWidth { get; set; }
         public int ZHeight { get; set; }
-        public TrackFilter(ITransponderReceiver reciever, int xOffset = 10000, int yOffset = 10000,
+        public TrackFilter(ITransponderReceiver reciever, Abstract_Factory airplaneFactory, int xOffset = 10000, int yOffset = 10000,
             int zOffset = 500, int xLength = 70000, int yWidth = 70000, int zHeight = 19500)
         {
             reciever.TransponderDataReady += HandlerOnRaiseTrackInsideMonitoringAreaEvent;
 
+            AirplaneFactory = airplaneFactory;
             XOffset = xOffset;
             YOffset = yOffset;
             ZOffset = zOffset;
@@ -37,6 +38,9 @@ namespace SWT1ATM
         {
             char[] separators = { ';' };
 
+            //Clearing lists each time. Lists have to be public to test them. 
+            vehiclesIn.Clear();
+            vehiclesOut.Clear();
 
             foreach (var data in e.TransponderData)
             {
@@ -48,7 +52,7 @@ namespace SWT1ATM
                 var zCoordinate = int.Parse(tokens[3]);
                 var dateTime = GetDate(tokens[4]);
 
-                var aircraft = new Aircraft(xCoordinate, yCoordinate, zCoordinate, dateTime, tag);
+                var aircraft = AirplaneFactory.CreateInstanceAirCraft(xCoordinate, yCoordinate, zCoordinate, dateTime, tag);
 
                 bool inbounds = false;
                 if (xCoordinate <= XOffset + XLength && xCoordinate >= XOffset)

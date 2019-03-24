@@ -20,9 +20,9 @@ namespace SWT1ATM.Factory
             return new Aircraft(x, y, z, time, tag);
         }
 
-        public ITrackFilter CreateInstanceTrackFilter(ITransponderReceiver tranRec, int x_off = 5000, int y_off = 5000, int z_off = 500, int x_len = 75000, int y_len = 75000, int z_len = 19500)
+        public ITrackFilter CreateInstanceTrackFilter(ITransponderReceiver tranRec, Abstract_Factory airplaneFactory, int x_off = 5000, int y_off = 5000, int z_off = 500, int x_len = 75000, int y_len = 75000, int z_len = 19500)
         {
-            return new TrackFilter(tranRec, x_off, y_off, z_off, x_len, y_len, z_len);
+            return new TrackFilter(tranRec, airplaneFactory, x_off, y_off, z_off, x_len, y_len, z_len);
         }
 
         public IVehicleFormatter CreateInstanceAirplaneFormatter()
