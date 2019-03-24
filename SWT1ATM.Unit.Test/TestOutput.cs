@@ -102,5 +102,19 @@ namespace SWT1ATM.Unit.Test
             _format.Received(2);
         }
         #endregion
+
+        #region VehicleToSTring
+        [Test]
+        public void AirplaneFormatterReturnExpectedString()
+        {
+            var tstamp = new DateTime();
+            var plane = new Aircraft(10, 10, 10, tstamp, "air0");
+            string expectedString = "Tag: air0 Coordinates: X: 10, Y: 10, Z: 10, Direction: 0 degrees."+" Date: "+tstamp+"\n\r";
+            _format = new AirplaneFormatter();
+            Assert.That(_format.VehicleToString(plane).Equals(expectedString));
+            _format.VehicleToString(new Aircraft(10,10,10,tstamp,"air0"));
+        }
+
+        #endregion
     }
 }
