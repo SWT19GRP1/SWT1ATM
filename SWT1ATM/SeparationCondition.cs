@@ -9,21 +9,18 @@ namespace SWT1ATM
         private double _planeThreshold;
         private int _heightThreshold;
 
-        public void subscribeToATM(Atm atm)
-        {
-            
-        }
-
         public event EventHandler<FormattedTransponderDataEventArgs> SeparationConditionEvent;
 
-        public ATMRTSeparationCondition(int plThres = 0, int heightThres = 0)
+        public ATMRTSeparationCondition(Atm atm, int plThres = 0, int heightThres = 0)
         {
             _planeThreshold = plThres;
             _heightThreshold = heightThres;
+            atm.ATMMonitorEvent += UpdateSeparationDetection;
         }
 
-        public void UpdateSeparationDetection(List<IVehicle> vehicles)
+        public void UpdateSeparationDetection(object sender, FormattedTransponderDataEventArgs e)
         {
+            List<IVehicle> vehicles = e.vehicles;
             for(int i = 0; i < vehicles.Count - 1 ; i++)
             {
                 for (int j = i + 1; j < vehicles.Count; j++)

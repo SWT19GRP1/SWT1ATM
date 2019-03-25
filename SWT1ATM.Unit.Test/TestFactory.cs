@@ -89,7 +89,7 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void CreateInstanceAtmSeparationCondition_AtmSeparationConditionIsCreated()
         {
-            var test = _uut.CreateInstanceAtmSeparationCondition(1, 1);
+            var test = _uut.CreateInstanceAtmSeparationCondition(new Atm(new TrackFilter(Substitute.For<ITransponderReceiver>(), new ATM_Factory())), 1, 1);
 
             Assert.That(test,Is.TypeOf<ATMRTSeparationCondition>());
         }

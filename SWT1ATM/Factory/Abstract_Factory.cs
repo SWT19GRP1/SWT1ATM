@@ -16,6 +16,6 @@ namespace SWT1ATM.Factory
         IVehicleFormatter CreateInstanceAirplaneFormatter();
         IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter, Atm atm);
         IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, ITrackFilter track);
-        IAtmSeparationCondition CreateInstanceAtmSeparationCondition(int plThreshold, int heightThreshold);
+        IAtmSeparationCondition CreateInstanceAtmSeparationCondition(Atm atm, int plThreshold, int heightThreshold);
     }
 }

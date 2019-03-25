@@ -20,7 +20,7 @@ namespace SWT1ATM
 
             var termOutput = fact.CreateInstanceTerminalOutput(vehicleFormatter, atm);
 
-            var atmSeperationCondition = fact.CreateInstanceAtmSeparationCondition(5000, 500);
+            var atmSeperationCondition = fact.CreateInstanceAtmSeparationCondition(atm, 5000, 500);
 
             while (true) {}
         }

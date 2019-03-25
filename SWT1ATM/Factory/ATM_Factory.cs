@@ -40,9 +40,9 @@ namespace SWT1ATM.Factory
             return new LogOutput(formatter, track);
         }
 
-        public IAtmSeparationCondition CreateInstanceAtmSeparationCondition(int plThreshold, int heightThreshold)
+        public IAtmSeparationCondition CreateInstanceAtmSeparationCondition(Atm atm, int plThreshold, int heightThreshold)
         {
-            return new ATMRTSeparationCondition(plThreshold, heightThreshold);
+            return new ATMRTSeparationCondition(atm, plThreshold, heightThreshold);
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 using SWT1ATM;
+using SWT1ATM.Factory;
+using TransponderReceiver;
 
 namespace SWT1ATM.Unit.Test
 {
@@ -15,7 +17,7 @@ namespace SWT1ATM.Unit.Test
         [SetUp]
         public void setup()
         {
-            _uut = new ATMRTSeparationCondition(5000, 500);
+            _uut = new ATMRTSeparationCondition(new Atm(new TrackFilter(Substitute.For<ITransponderReceiver>(), new ATM_Factory())), 5000, 500);
             aircrafts = new List<IVehicle>();
 
             var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321");
@@ -93,7 +95,7 @@ namespace SWT1ATM.Unit.Test
             var outputter = Substitute.For<IOutput>();
             _uut.SeparationConditionEvent += outputter.LogVehicleData;
 
-            _uut.UpdateSeparationDetection(testList);
+            _uut.UpdateSeparationDetection(this, new FormattedTransponderDataEventArgs(testList));
 
             outputter.Received().LogVehicleData(Arg.Any<object>(), Arg.Any<FormattedTransponderDataEventArgs>());
         }
@@ -104,7 +106,7 @@ namespace SWT1ATM.Unit.Test
             var outputter = Substitute.For<IOutput>();
             _uut.SeparationConditionEvent += outputter.LogVehicleData;
 
-            _uut.UpdateSeparationDetection(aircrafts);
+            _uut.UpdateSeparationDetection(this, new FormattedTransponderDataEventArgs(aircrafts));
 
             outputter.Received(13).LogVehicleData(Arg.Any<object>(), Arg.Any<FormattedTransponderDataEventArgs>());
         }
@@ -119,7 +121,7 @@ namespace SWT1ATM.Unit.Test
             var outputter = Substitute.For<IOutput>();
             _uut.SeparationConditionEvent += outputter.LogVehicleData;
 
-            _uut.UpdateSeparationDetection(testList);
+            _uut.UpdateSeparationDetection(this, new FormattedTransponderDataEventArgs(testList));
 
             outputter.DidNotReceive().LogVehicleData(Arg.Any<object>(), Arg.Any<FormattedTransponderDataEventArgs>());
         }
