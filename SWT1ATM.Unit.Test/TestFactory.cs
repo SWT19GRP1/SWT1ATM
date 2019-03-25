@@ -80,7 +80,7 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void CreateInstanceLogOutput_InstanceLogOutputIsCreated()
         {
-            var test = _uut.CreateInstanceLogOutput(Substitute.For<IVehicleFormatter>(), Substitute.For<ITrackFilter>());
+            var test = _uut.CreateInstanceLogOutput(Substitute.For<IVehicleFormatter>(), Substitute.For<IATM>());
 
             Assert.That(test, Is.TypeOf<LogOutput>());
             

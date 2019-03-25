@@ -35,9 +35,9 @@ namespace SWT1ATM.Factory
             return new TerminalOutput(formatter, atm);
         }
 
-        public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, ITrackFilter track)
+        public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, IATM atm)
         {
-            return new LogOutput(formatter, track);
+            return new LogOutput(formatter, atm);
         }
 
         public IAtmSeparationCondition CreateInstanceAtmSeparationCondition(Atm atm, int plThreshold, int heightThreshold)

@@ -7,11 +7,11 @@ namespace SWT1ATM.Output
 {
     public class LogOutput:IOutput
     {
-        public LogOutput(IVehicleFormatter formatter, ITrackFilter track)
+        public LogOutput(IVehicleFormatter formatter, IATM atm)
         {
             
             Formatter = formatter;
-            track.AirTrackToMonitorEvent += LogVehicleData;
+            atm.ATMMonitorEvent += LogVehicleData;
         }
         public void LogVehicleData(object sender, FormattedTransponderDataEventArgs args)
         {
