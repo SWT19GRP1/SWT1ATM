@@ -23,8 +23,7 @@ namespace SWT1ATM.Output
             foreach (var plane in vehicles)
             {
                 Console.Write(Formatter.VehicleToString(plane));
-            }
-            
+            }            
         }
     }
 }

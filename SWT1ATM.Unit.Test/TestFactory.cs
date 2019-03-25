@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
-using SWT1ATM.Factory;
+using SWT1ATM.Interfaces;
 using SWT1ATM.Output;
 using TransponderReceiver;
 namespace SWT1ATM.Unit.Test
@@ -13,12 +13,12 @@ namespace SWT1ATM.Unit.Test
     [TestFixture]
     class TestFactory
     {
-        private ATM_Factory _uut;
+        private AtmFactory _uut;
 
         [SetUp]
         public void Setup()
         {
-            _uut = new ATM_Factory();
+            _uut = new AtmFactory();
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace SWT1ATM.Unit.Test
         public void CreateInstanceTrackFilter_TrackFilterIsCreated()
         {
 
-            var test = _uut.CreateInstanceTrackFilter(Substitute.For<ITransponderReceiver>(), Substitute.For<Abstract_Factory>(),1, 1, 1, 1, 1, 1);
+            var test = _uut.CreateInstanceTrackFilter(Substitute.For<ITransponderReceiver>(), Substitute.For<IFactory>(),1, 1, 1, 1, 1, 1);
 
             Assert.That(test,Is.TypeOf<TrackFilter>());
 
@@ -70,7 +70,7 @@ namespace SWT1ATM.Unit.Test
 
         public void CreateInstanceTerminalOutput_TerminalOutputIsCreated()
         {
-            var uut = new ATM_Factory();
+            var uut = new AtmFactory();
 
             var test = uut.CreateInstanceTerminalOutput(Substitute.For<IVehicleFormatter>(),new Atm(Substitute.For<ITrackFilter>()));
 
@@ -89,7 +89,7 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void CreateInstanceAtmSeparationCondition_AtmSeparationConditionIsCreated()
         {
-            var test = _uut.CreateInstanceAtmSeparationCondition(new Atm(new TrackFilter(Substitute.For<ITransponderReceiver>(), new ATM_Factory())), 1, 1);
+            var test = _uut.CreateInstanceAtmSeparationCondition(new Atm(new TrackFilter(Substitute.For<ITransponderReceiver>(), new AtmFactory())), 1, 1);
 
             Assert.That(test,Is.TypeOf<ATMRTSeparationCondition>());
         }

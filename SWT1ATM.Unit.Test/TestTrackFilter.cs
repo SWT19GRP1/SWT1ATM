@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 using TransponderReceiver;
-using SWT1ATM.Factory;
 
 namespace SWT1ATM.Unit.Test
 {
@@ -24,7 +23,7 @@ namespace SWT1ATM.Unit.Test
             _transponderReceiver = Substitute.For<ITransponderReceiver>();
             _aircraft = new Aircraft(0,0,0,DateTime.Now,"YOLO69");
 
-            _uut = new TrackFilter(_transponderReceiver, new ATM_Factory());
+            _uut = new TrackFilter(_transponderReceiver, new AtmFactory());
             _aircraftlist = new List<IVehicle> {_aircraft};
 
             _transponderReceiver.TransponderDataReady += (sender, args) => _transponderWasCalled = true;

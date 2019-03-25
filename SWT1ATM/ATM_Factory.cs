@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SWT1ATM.Interfaces;
 using SWT1ATM.Output;
 using TransponderReceiver;
 
-namespace SWT1ATM.Factory
+namespace SWT1ATM
 {
-    public class ATM_Factory : Abstract_Factory
+    public class AtmFactory : IFactory
     {
         public Atm CreateAtm(ITrackFilter trackFilter)
         {
@@ -20,7 +17,7 @@ namespace SWT1ATM.Factory
             return new Aircraft(x, y, z, time, tag);
         }
 
-        public ITrackFilter CreateInstanceTrackFilter(ITransponderReceiver tranRec, Abstract_Factory airplaneFactory, int x_off = 5000, int y_off = 5000, int z_off = 500, int x_len = 75000, int y_len = 75000, int z_len = 19500)
+        public ITrackFilter CreateInstanceTrackFilter(ITransponderReceiver tranRec, IFactory airplaneFactory, int x_off = 5000, int y_off = 5000, int z_off = 500, int x_len = 75000, int y_len = 75000, int z_len = 19500)
         {
             return new TrackFilter(tranRec, airplaneFactory, x_off, y_off, z_off, x_len, y_len, z_len);
         }

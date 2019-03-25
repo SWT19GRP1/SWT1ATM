@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SWT1ATM;
-using SWT1ATM.Factory;
+using SWT1ATM.Interfaces;
 using TransponderReceiver;
 
 namespace SWT1ATM
@@ -13,14 +13,14 @@ namespace SWT1ATM
 
         public List<IVehicle> vehiclesIn = new List<IVehicle>();
         public List<IVehicle> vehiclesOut = new List<IVehicle>();
-        public Abstract_Factory AirplaneFactory;
+        public IFactory AirplaneFactory;
         public int XOffset { get; set; }
         public int YOffset { get; set; }
         public int ZOffset { get; set; }
         public int XLength { get; set; }
         public int YWidth { get; set; }
         public int ZHeight { get; set; }
-        public TrackFilter(ITransponderReceiver reciever, Abstract_Factory airplaneFactory, int xOffset = 10000, int yOffset = 10000,
+        public TrackFilter(ITransponderReceiver reciever, IFactory airplaneFactory, int xOffset = 10000, int yOffset = 10000,
             int zOffset = 500, int xLength = 70000, int yWidth = 70000, int zHeight = 19500)
         {
             reciever.TransponderDataReady += HandlerOnRaiseTrackInsideMonitoringAreaEvent;
