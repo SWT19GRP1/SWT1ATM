@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
-namespace SWT1ATM
+namespace SWT1ATM.Interfaces
 {
     public interface ITrackFilter
     {

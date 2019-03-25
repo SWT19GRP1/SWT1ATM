@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SWT1ATM
+namespace SWT1ATM.Interfaces
 {
     public interface IATM
     {

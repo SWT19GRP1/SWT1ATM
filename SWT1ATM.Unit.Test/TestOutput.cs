@@ -7,6 +7,7 @@ using SWT1ATM;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
+using SWT1ATM.Interfaces;
 using SWT1ATM.Output;
 
 namespace SWT1ATM.Unit.Test

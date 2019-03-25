@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SWT1ATM
+namespace SWT1ATM.Interfaces
 {
     public interface IVehicle
     {

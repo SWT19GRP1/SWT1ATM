@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
+using SWT1ATM.Interfaces;
 using TransponderReceiver;
 
 namespace SWT1ATM.Unit.Test

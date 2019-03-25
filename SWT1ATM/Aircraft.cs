@@ -1,5 +1,5 @@
 ﻿using System;
-using SWT1ATM;
+using SWT1ATM.Interfaces;
 
 namespace SWT1ATM
 {

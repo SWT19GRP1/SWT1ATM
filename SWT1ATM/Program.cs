@@ -1,5 +1,4 @@
-﻿using SWT1ATM.Output;
-using TransponderReceiver;
+﻿using TransponderReceiver;
 
 namespace SWT1ATM
 {
@@ -7,7 +6,7 @@ namespace SWT1ATM
     {
         static void Main(string[] args)
         {
-            AtmFactory fact = new AtmFactory();
+            var fact = new AtmFactory();
 
             var reciever = TransponderReceiverFactory.CreateTransponderDataReceiver();
 
