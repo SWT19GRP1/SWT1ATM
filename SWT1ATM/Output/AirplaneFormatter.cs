@@ -8,7 +8,7 @@ namespace SWT1ATM.Output
         {
             string general = "Tag: " + plane.Tag + " Coordinates: X: " + plane.X + ", Y: " + plane.Y + ", Z: " + plane.Z + "," + " Direction: " + plane.Direction + " degrees.";
             string date = " Date: " + plane.Timestamp;
-            string airplaneString = general + date +"\n\r";
+            string airplaneString = general + date;
             return airplaneString;
         }
     }
