@@ -24,7 +24,7 @@ namespace SWT1ATM.Unit.Test
             _transponderReceiver = Substitute.For<ITransponderReceiver>();
             _aircraft = new Aircraft(0,0,0,DateTime.Now,"YOLO69");
 
-            _uut = new TrackFilter(_transponderReceiver);
+            _uut = new TrackFilter(_transponderReceiver, new ATM_Factory());
             _aircraftlist = new List<IVehicle> {_aircraft};
 
             _transponderReceiver.TransponderDataReady += (sender, args) => _transponderWasCalled = true;
@@ -84,9 +84,16 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void TrackFilter_HandlerOnRaiseTrackInsideMonitoringAreaEvent_TwoEventTwoInList()
         {
-            _uut.HandlerOnRaiseTrackInsideMonitoringAreaEvent(this, new RawTransponderDataEventArgs(new List<string>() { "ATR423;39045;12932;14000;20151006213456789" }));
-            _uut.HandlerOnRaiseTrackInsideMonitoringAreaEvent(this, new RawTransponderDataEventArgs(new List<string>() { "YOLO69;39045;12932;14000;20151006213456789" }));
+            _uut.HandlerOnRaiseTrackInsideMonitoringAreaEvent(this, new RawTransponderDataEventArgs(new List<string>() { "ATR423;39045;12932;14000;20151006213456789", "YOLO69;39045;12932;14000;20151006213456789" }));
             Assert.That(_uut.vehiclesIn.Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void TrackFilter_HandlerOnRaiseTrackInsideMonitoringAreaEvent_TwoEventSameAiplaneOneInList()
+        {
+            _uut.HandlerOnRaiseTrackInsideMonitoringAreaEvent(this, new RawTransponderDataEventArgs(new List<string>() { "ATR423;39045;12932;14000;20151006213456789" }));
+            _uut.HandlerOnRaiseTrackInsideMonitoringAreaEvent(this, new RawTransponderDataEventArgs(new List<string>() { "ATR423;39045;12932;14000;20151006213456789" }));
+            Assert.That(_uut.vehiclesIn.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -168,6 +175,8 @@ namespace SWT1ATM.Unit.Test
             _uut.HandlerOnRaiseTrackInsideMonitoringAreaEvent(this, new RawTransponderDataEventArgs(new List<string>() { "ATR423;10150;9999;17000;20151006213456789" }));
             Assert.That(_uut.vehiclesIn.Count, Is.EqualTo(0));
         }
+
+
 
         [Test]
         public void TrackFilter_yCoordinateTooLow_IsAddedToVehiclesOut()

@@ -50,6 +50,7 @@
     <Compile Include="ATM.cs" />
     <Compile Include="Factory\Abstract_Factory.cs" />
     <Compile Include="Factory\ATM_Factory.cs" />
+    <Compile Include="Interfaces\IATM.cs" />
     <Compile Include="Interfaces\IATM_Separation_Condition.cs" />
     <Compile Include="Interfaces\IOutput.cs" />
     <Compile Include="Interfaces\ITrackFilter.cs" />

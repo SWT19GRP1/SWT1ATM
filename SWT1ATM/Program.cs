@@ -12,7 +12,7 @@ namespace SWT1ATM
 
             var reciever = TransponderReceiverFactory.CreateTransponderDataReceiver();
 
-            var trackfilter = fact.CreateInstanceTrackFilter(reciever);
+            var trackfilter = fact.CreateInstanceTrackFilter(reciever, fact);
 
             var vehicleFormatter = fact.CreateInstanceAirplaneFormatter();
 

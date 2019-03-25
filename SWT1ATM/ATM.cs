@@ -5,7 +5,7 @@ using SWT1ATM;
 
 namespace SWT1ATM
 {
-    public class Atm
+    public class Atm:IATM
     {
         public event EventHandler<FormattedTransponderDataEventArgs> ATMMonitorEvent;
 
