@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SWT1ATM;
+using SWT1ATM.Interfaces;
 
 namespace SWT1ATM
 {
@@ -11,7 +12,7 @@ namespace SWT1ATM
 
         public event EventHandler<FormattedTransponderDataEventArgs> SeparationConditionEvent;
 
-        public ATMRTSeparationCondition(Atm atm, int plThres = 0, int heightThres = 0)
+        public ATMRTSeparationCondition(IATM atm, int plThres = 0, int heightThres = 0)
         {
             _planeThreshold = plThres;
             _heightThreshold = heightThres;

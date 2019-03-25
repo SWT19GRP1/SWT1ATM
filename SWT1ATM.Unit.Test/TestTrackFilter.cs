@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
+using SWT1ATM.Interfaces;
 using TransponderReceiver;
 
 namespace SWT1ATM.Unit.Test

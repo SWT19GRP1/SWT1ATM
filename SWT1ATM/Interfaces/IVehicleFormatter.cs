@@ -1,4 +1,4 @@
-﻿namespace SWT1ATM
+﻿namespace SWT1ATM.Interfaces
 {
     public interface IVehicleFormatter
     {

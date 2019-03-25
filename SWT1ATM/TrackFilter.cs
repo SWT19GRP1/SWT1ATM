@@ -12,7 +12,9 @@ namespace SWT1ATM
         public event EventHandler<FormattedTransponderDataEventArgs> AirTrackOutSideMonitorEvent;
 
         public List<IVehicle> vehiclesIn = new List<IVehicle>();
+
         public List<IVehicle> vehiclesOut = new List<IVehicle>();
+
         public IFactory AirplaneFactory;
         public int XOffset { get; set; }
         public int YOffset { get; set; }

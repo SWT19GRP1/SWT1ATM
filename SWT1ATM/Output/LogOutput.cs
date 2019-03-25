@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using SWT1ATM;
+﻿using SWT1ATM.Interfaces;
 
 namespace SWT1ATM.Output
 {
