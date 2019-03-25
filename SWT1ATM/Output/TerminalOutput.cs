@@ -14,28 +14,25 @@ namespace SWT1ATM.Output
             sep.SeparationConditionEvent += LogSeperationCondition;
         }
         public IVehicleFormatter Formatter { get; set; }
-
+        private string AirplanesInAirSpace;
+        private string SeperationConditions= "Seperation Conditions: ";
         public void LogVehicleData(object sender, FormattedTransponderDataEventArgs args)
         {
             var vehicles = args.vehicles;
             Console.Clear();
-            Console.WriteLine("Current Airplanes in Airspace:");
+            AirplanesInAirSpace = "Current Airplanes in Airspace: \n";
             foreach (var plane in vehicles)
             {
-                Console.WriteLine(Formatter.VehicleToString(plane));
-            }            
+                AirplanesInAirSpace+=Formatter.VehicleToString(plane);
+            }
+            Console.Write(AirplanesInAirSpace+SeperationConditions);
+            SeperationConditions = ""; //Clear string for sep. cond. every tick
         }
 
         public void LogSeperationCondition(object sender, FormattedTransponderDataEventArgs args)
         {
             var vehicles = args.vehicles;
-            Console.WriteLine("Seperation Conditions: ");
-            foreach (var plane in vehicles)
-            {
-                
-                Console.WriteLine(plane.Tag);
-            }
-            Console.WriteLine("-----------------------------------------");
+            SeperationConditions += "\nSeperation Condition between: " + vehicles[0].Tag + " and " + vehicles[1].Tag;
         }
     }
 }

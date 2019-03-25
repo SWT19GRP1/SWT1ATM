@@ -7,11 +7,11 @@ namespace SWT1ATM.Output
 {
     public class LogOutput:IOutput
     {
-        public LogOutput(IVehicleFormatter formatter, IATM atm)
+        public LogOutput(IVehicleFormatter formatter, IAtmSeparationCondition separation)
         {
             
             Formatter = formatter;
-            atm.ATMMonitorEvent += LogVehicleData;
+            separation.SeparationConditionEvent+= LogVehicleData;
         }
         public void LogVehicleData(object sender, FormattedTransponderDataEventArgs args)
         {
@@ -19,6 +19,7 @@ namespace SWT1ATM.Output
 
             string path = @"C:\Temp\SeparationCondition.txt";
             var myFile = new System.IO.StreamWriter(path, append:true);
+            myFile.Write("Seperation Condition between: \n");
             foreach (var plane in vehicles)
             {
                 myFile.Write(Formatter.VehicleToString(plane));

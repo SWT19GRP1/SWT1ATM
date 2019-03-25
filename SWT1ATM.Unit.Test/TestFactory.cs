@@ -72,7 +72,7 @@ namespace SWT1ATM.Unit.Test
         {
             var uut = new AtmFactory();
 
-            var test = uut.CreateInstanceTerminalOutput(Substitute.For<IVehicleFormatter>(),new Atm(Substitute.For<ITrackFilter>()));
+            var test = uut.CreateInstanceTerminalOutput(Substitute.For<IVehicleFormatter>(),new Atm(Substitute.For<ITrackFilter>()),Substitute.For<IAtmSeparationCondition>());
 
             Assert.That(test, Is.TypeOf<TerminalOutput>());
         }
@@ -80,7 +80,7 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void CreateInstanceLogOutput_InstanceLogOutputIsCreated()
         {
-            var test = _uut.CreateInstanceLogOutput(Substitute.For<IVehicleFormatter>(), Substitute.For<IATM>());
+            var test = _uut.CreateInstanceLogOutput(Substitute.For<IVehicleFormatter>(), Substitute.For<IAtmSeparationCondition>());
 
             Assert.That(test, Is.TypeOf<LogOutput>());
             

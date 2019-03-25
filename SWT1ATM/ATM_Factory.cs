@@ -27,14 +27,14 @@ namespace SWT1ATM
             return new AirplaneFormatter();
         }
 
-        public IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter, Atm atm)
+        public IOutput CreateInstanceTerminalOutput(IVehicleFormatter formatter, Atm atm, IAtmSeparationCondition separation)
         {
-            return new TerminalOutput(formatter, atm);
+            return new TerminalOutput(formatter, atm,separation);
         }
 
-        public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, IATM atm)
+        public IOutput CreateInstanceLogOutput(IVehicleFormatter formatter, IAtmSeparationCondition separation)
         {
-            return new LogOutput(formatter, atm);
+            return new LogOutput(formatter, separation);
         }
 
         public IAtmSeparationCondition CreateInstanceAtmSeparationCondition(Atm atm, int plThreshold, int heightThreshold)

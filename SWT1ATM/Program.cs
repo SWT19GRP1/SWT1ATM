@@ -17,10 +17,10 @@ namespace SWT1ATM
 
             var atm = fact.CreateAtm(trackfilter);
 
-            var termOutput = fact.CreateInstanceTerminalOutput(vehicleFormatter, atm);
-
             var atmSeperationCondition = fact.CreateInstanceAtmSeparationCondition(atm, 5000, 500);
 
+            var termOutput = fact.CreateInstanceTerminalOutput(vehicleFormatter, atm, atmSeperationCondition);
+            var logOutput = fact.CreateInstanceLogOutput(vehicleFormatter, atmSeperationCondition);
             while (true) {}
         }
     }
