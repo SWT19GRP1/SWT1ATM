@@ -20,7 +20,6 @@ namespace SWT1ATM.Unit.Test
         private IVehicleFormatter _format;
         private IOutput _uut;
         private string _path;
-        private ITrackFilter _track;
         private List<IVehicle> _vehicles;
         private IATM _atm;
         #region setup
@@ -30,8 +29,6 @@ namespace SWT1ATM.Unit.Test
             _vehicles = new List<IVehicle>();
             _path = @"c:\Temp\SeparationCondition.txt";
             _format = Substitute.For<IVehicleFormatter>();
-            _track = Substitute.For<ITrackFilter>();
-            _uut = new LogOutput(_format,_track);
             _atm = Substitute.For<IATM>();
             var air0 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XCE321");
             var air1 = new Aircraft(1000, 1000, 1000, new DateTime(2019, 06, 06, 12, 12, 12, 123), "XXE321");
@@ -44,11 +41,10 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void CreateANewFileWhenNoFileIsPresent()
         {
-            var separationMock = Substitute.For<IAtmSeparationCondition>();
+            _uut = new LogOutput(_format, _atm);
             if (File.Exists(_path))
                 File.Delete(_path);
-            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
+            _atm.ATMMonitorEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
             Assert.That(File.Exists(_path));
             
         }
@@ -56,6 +52,7 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void AppendAFileWhenFileIsPresent()
         {
+            _uut = new LogOutput(_format, _atm);
             var separationMock = Substitute.For<IAtmSeparationCondition>();
             _format.VehicleToString(_vehicles[0]).Returns("NewTest");
             if (File.Exists(_path))
@@ -63,8 +60,7 @@ namespace SWT1ATM.Unit.Test
             var myFileWriter = new System.IO.StreamWriter(_path);
             myFileWriter.Write("Test:");
             myFileWriter.Close();
-            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
+            _atm.ATMMonitorEvent+= Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
 
             var myFile = new System.IO.StreamReader(_path, Encoding.UTF8);
             Assert.That(myFile.ReadToEnd() == "Test:NewTest");
@@ -73,10 +69,9 @@ namespace SWT1ATM.Unit.Test
         [Test]
         public void LoggerDoesntThrowErrorWithZeroLenghtList()
         {
-            var separationMock = Substitute.For<IAtmSeparationCondition>();
+            _uut = new LogOutput(_format, _atm);
             List<IVehicle> emptyList = new List<IVehicle>();
-            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            Assert.That(() => separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
+            Assert.That(() => _atm.ATMMonitorEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
         }
 
         #endregion
@@ -87,19 +82,15 @@ namespace SWT1ATM.Unit.Test
         {
             _uut = new TerminalOutput(_format,_atm);
             List<IVehicle> emptyList = new List<IVehicle>();
-            var separationMock = Substitute.For<IAtmSeparationCondition>();
-            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            Assert.That(() => separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
+            Assert.That(() => _atm.ATMMonitorEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(emptyList)), Throws.Nothing);
         }
 
         [Test]
         public void TerminalTwiceRaisedEventLogVehicleDataIsCalledTwice()
         {
             _uut = new TerminalOutput(_format, _atm);
-            var separationMock = Substitute.For<IAtmSeparationCondition>();
-            separationMock.SeparationConditionEvent += _uut.LogVehicleData;
-            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
-            separationMock.SeparationConditionEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
+            _atm.ATMMonitorEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
+            _atm.ATMMonitorEvent += Raise.EventWith(this, new FormattedTransponderDataEventArgs(_vehicles));
             _format.Received(2);
         }
         #endregion
