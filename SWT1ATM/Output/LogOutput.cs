@@ -15,13 +15,14 @@ namespace SWT1ATM.Output
             var vehicles = args.vehicles;
 
             string path = @"C:\Temp\SeparationCondition.txt";
-            var myFile = new System.IO.StreamWriter(path, append:true);
+            /*var myFile = new System.IO.StreamWriter(path, append:true);
             myFile.Write("Seperation Condition between: \n");
             foreach (var plane in vehicles)
             {
                 myFile.Write(Formatter.VehicleToString(plane));
             }
             myFile.Close();
+            */
         }
 
         public IVehicleFormatter Formatter { get; set; }

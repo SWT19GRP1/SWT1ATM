@@ -29,20 +29,20 @@ namespace SWT1ATM
         {
             if (Tag != referenceVehicle.Tag) return;
 
-                var deltaX =  referenceVehicle.X - X;
-                var deltaY =  referenceVehicle.Y - Y;
-                var deltaZ =  referenceVehicle.Z - Z;
-        
-                var distance = (float) Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-                var timeDiff = referenceVehicle.Timestamp - Timestamp;
-                var timeDiffInSec = timeDiff.TotalSeconds;
-                var roundedSec =  Math.Round(timeDiffInSec);
+            var deltaX =  referenceVehicle.X - X;
+            var deltaY =  referenceVehicle.Y - Y;
+            var deltaZ =  referenceVehicle.Z - Z;
+    
+            var distance = (float) Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+            var timeDiff = referenceVehicle.Timestamp - Timestamp;
+            var timeDiffInSec = timeDiff.TotalSeconds;
+            var roundedSec =  Math.Round(timeDiffInSec);
 
-                Speed = distance / roundedSec;
+            Speed = distance / roundedSec;
 
-              
-               var bearing = Math.Atan2((double) deltaY, (double) deltaX) * 180 / Math.PI;
-               var heading = (int)Math.Round(bearing);
+          
+           var bearing = Math.Atan2((double) deltaY, (double) deltaX) * 180 / Math.PI;
+           var heading = (int)Math.Round(bearing);
 
             if (deltaX < 0 && deltaY >= 0)
             {

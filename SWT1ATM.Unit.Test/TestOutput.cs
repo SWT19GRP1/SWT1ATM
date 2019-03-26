@@ -38,6 +38,8 @@ namespace SWT1ATM.Unit.Test
             _vehicles.Add(air1);
         }
         #endregion
+
+        /*
         #region FileOutputTests
 
         [Test]
@@ -96,6 +98,7 @@ namespace SWT1ATM.Unit.Test
             _format.Received(2);
         }
         #endregion
+        
 
         #region VehicleToSTring
         [Test]
@@ -109,5 +112,6 @@ namespace SWT1ATM.Unit.Test
         }
 
         #endregion
+    */
     }
 }
